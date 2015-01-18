@@ -1,0 +1,4 @@
+﻿Maya シーン (*.ma|*.mb),*.ma+*.mb
+Maya ASCII (*.ma),*.ma
+Maya バイナリ (*.mb),*.ma
+すべてのファイル (*.*),*.*

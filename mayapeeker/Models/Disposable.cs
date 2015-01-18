@@ -1,16 +1,14 @@
-﻿using Microsoft.Practices.Prism.Mvvm;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace mayapeeker.ViewModels
+namespace mayapeeker.Models
 {
-    class ViewModelBase : BindableBase, IDisposable
+    class Disposable
     {
-        public virtual void Initialize() { }
-
-
-        // Models.Disposable と同じだけど、BindableBase と多重継承できないからコピペ
-        #region IDisposable
-        ~ViewModelBase()
+        ~Disposable()
         {
             Dispose(false);
         }
@@ -42,7 +40,5 @@ namespace mayapeeker.ViewModels
 
         private bool _disposed;
         private object _lockObj = new object();
-        #endregion
-
     }
 }
