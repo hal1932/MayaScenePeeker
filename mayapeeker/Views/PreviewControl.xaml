@@ -5,6 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d">
     <Grid>
-        <Button Content="プレビュー"/>
+        <ListBox ItemsSource="{Binding DirectoryContainer.ItemArray}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding FullName}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>

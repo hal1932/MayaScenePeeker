@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace mayapeeker.Views
 {
@@ -17,6 +18,11 @@ namespace mayapeeker.Views
             Loaded += (sender, e) =>
             {
                 viewModel.Initialize();
+
+                Window.GetWindow(this).Closing += (sender1, e1) =>
+                {
+                    viewModel.Dispose();
+                };
             };
         }
     }

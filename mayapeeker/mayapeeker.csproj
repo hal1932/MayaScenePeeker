@@ -62,12 +62,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\AppCache.cs" />
     <Compile Include="Models\AssociatedFiletype.cs" />
     <Compile Include="Models\Crc32\OptimizedCRC.cs" />
+    <Compile Include="Models\DirectoryContainer.cs" />
     <Compile Include="Models\Disposable.cs" />
+    <Compile Include="Models\FilepathHistory.cs" />
     <Compile Include="Models\HashDb.cs" />
-    <Compile Include="Models\Messaging\Message.cs" />
-    <Compile Include="Models\Messaging\Messenger.cs" />
+    <Compile Include="Models\Coordination\InterModelMessage.cs" />
+    <Compile Include="Models\Coordination\InterModelMessengar.cs" />
+    <Compile Include="Models\ModelBase.cs" />
     <Compile Include="ViewModels\BookmarkViewModel.cs" />
     <Compile Include="ViewModels\FileViewModel.cs" />
     <Compile Include="ViewModels\OptionViewModel.cs" />
@@ -78,6 +82,8 @@
     <Compile Include="Views\BookmarkControl.xaml.cs">
       <DependentUpon>BookmarkControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Converters\DebugConverter.cs" />
+    <Compile Include="Views\Converters\FullNameConverter.cs" />
     <Compile Include="Views\FileControl.xaml.cs">
       <DependentUpon>FileControl.xaml</DependentUpon>
     </Compile>
@@ -168,6 +174,7 @@
     <Resource Include="Views\Images\forward.png" />
     <Resource Include="Views\Images\up.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace mayapeeker.Models
 {
-    class Disposable
+    public class Disposable : ModelBase
     {
         ~Disposable()
         {

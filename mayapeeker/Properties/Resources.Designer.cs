@@ -61,6 +61,15 @@ namespace mayapeeker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _app_cache.txt.
+        /// </summary>
+        internal static string File_AppCache {
+            get {
+                return ResourceManager.GetString("File_AppCache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to associated_filetype.txt.
         /// </summary>
         internal static string File_AssociatedFiletype {

@@ -1,4 +1,4 @@
-//// http://dev.khsu.ru/el/crc32/
+// http://dev.khsu.ru/el/crc32/
 using System;
 using System.IO;
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace mayapeeker.Models
 {
-    class HashDb : Disposable
+    public class HashDb : Disposable
     {
         public string this[string key]
         {
@@ -27,15 +28,18 @@ namespace mayapeeker.Models
 
         public void Open(string filename)
         {
-            using (var reader = new StreamReader(filename))
+            if (File.Exists(filename))
             {
-                while(!reader.EndOfStream)
+                using (var reader = new StreamReader(filename))
                 {
-                    var line = reader.ReadLine().Trim();
-                    var items = line.Split(',');
+                    while (!reader.EndOfStream)
+                    {
+                        var line = reader.ReadLine().Trim();
+                        var items = line.Split(',');
 
-                    var keyHash = CalcHash(items[0]);
-                    _dic[keyHash] = items[1];
+                        var keyHash = int.Parse(items[0]);
+                        _dic[keyHash] = items[1];
+                    }
                 }
             }
             _filename = filename;

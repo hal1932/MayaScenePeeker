@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace mayapeeker.Models
 {
-    class AssociatedFiletype : BindableBase
+    public class AssociatedFiletype : ModelBase
     {
         #region LabelArray変更通知プロパティ
         private string[] _LabelArray;
@@ -28,7 +28,7 @@ namespace mayapeeker.Models
         #endregion
 
         #region SelectedIndex変更通知プロパティ
-        private int _SelectedIndex;
+        private int _SelectedIndex = -1;
 
         public int SelectedIndex
         {
@@ -42,8 +42,8 @@ namespace mayapeeker.Models
                 OnPropertyChanged("SelectedIndex");
 
                 OnPropertyChanged("SelectedFilter");
-                _messenger.DispatchMessage(
-                    new Messaging.Message("FileFilterChanged", SelectedFilter));
+                Messenger.DispatchMessage(
+                    new Coordination.InterModelMessage("FileFilterChanged", SelectedFilter));
             }
         }
         #endregion
@@ -92,7 +92,6 @@ namespace mayapeeker.Models
 
 
         private List<string[]> _filterArrayList = new List<string[]>();
-        private Messaging.Messenger _messenger = new Messaging.Messenger();
 
     }
 }
