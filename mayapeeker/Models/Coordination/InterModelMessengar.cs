@@ -73,21 +73,17 @@ namespace mayapeeker.Models.Coordination
         {
             foreach (var messenger in _messengerList)
             {
-                if (messenger != this)
-                {
-                    if (messenger._keyFilter.Count > 0)
-                    {
-                        if (!messenger._keyFilter.Contains(message.Key))
-                        {
-                            continue;
-                        }
-                    }
+                if (messenger == this) continue;
+                if (messenger.MessageReceived == null) continue;
 
-                    if (messenger.MessageReceived != null)
+                if (messenger._keyFilter.Count > 0)
+                {
+                    if (!messenger._keyFilter.Contains(message.Key))
                     {
-                        messenger.MessageReceived(_sender, message);
+                        continue;
                     }
                 }
+                messenger.MessageReceived(_sender, message);
             }
         }
 
