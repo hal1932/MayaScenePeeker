@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,54 +11,31 @@ namespace mayapeeker.Models
 {
     public class FilepathHistory : ModelBase
     {
-        #region CurrentPath変更通知プロパティ
-        private DirectoryInfo _CurrentDirectoryInfo;
-
         public DirectoryInfo CurrentDirectoryInfo
         {
-            get
-            { return _CurrentDirectoryInfo; }
-            set
-            { 
-                if (_CurrentDirectoryInfo == value)
-                    return;
-
-                if (_CurrentDirectoryInfo != null)
-                {
-                    var historyList = HistoryArray.ToList();
-                    historyList.Insert(0, value);
-                    HistoryArray = historyList.ToArray();
-                }
-
-                _CurrentDirectoryInfo = value;
-                OnPropertyChanged("CurrentDirectoryInfo");
-                Messenger.DispatchMessage(
-                    new Coordination.InterModelMessage("SelectedDirectoryChanged", value));
-            }
+            get { return _itemHistory[_currentItemIndex]; }
         }
-        #endregion
 
-        #region HistoryArray変更通知プロパティ
-        private DirectoryInfo[] _HistoryArray;
-
-        public DirectoryInfo[] HistoryArray
+        public bool ExistsBackward
         {
-            get
-            { return _HistoryArray; }
-            set
-            { 
-                if (_HistoryArray == value)
-                    return;
-                _HistoryArray = value;
-                OnPropertyChanged("HistoryArray");
-            }
+            get { return _currentItemIndex > 0; }
         }
-        #endregion
+
+        public bool ExistsForward
+        {
+            get { return _currentItemIndex < _itemHistory.Count - 1; }
+        }
 
 
         public FilepathHistory()
         {
-            HistoryArray = new DirectoryInfo[0];
+            Messenger.AddMessageFilter("CurrentDirectoryChanged");
+            Messenger.MessageReceived += (sender, e) =>
+            {
+                var info = e.Content as DirectoryInfo;
+                if (info.FullName == CurrentDirectoryInfo.FullName) return;
+                Push(info);
+            };
         }
 
 
@@ -68,7 +46,9 @@ namespace mayapeeker.Models
             {
                 lastItem = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             }
-            CurrentDirectoryInfo = new DirectoryInfo(lastItem);
+            _itemHistory.Add(new DirectoryInfo(lastItem));
+
+            SendCurrentChangedMessage();
         }
 
 
@@ -76,5 +56,59 @@ namespace mayapeeker.Models
         {
             AppCache.Set("LastFilepath", CurrentDirectoryInfo.FullName);
         }
+
+
+        public void Push(DirectoryInfo info)
+        {
+            if (info == null) return;
+
+            if (_currentItemIndex < _itemHistory.Count - 1)
+            {
+                _itemHistory.RemoveRange(
+                    _currentItemIndex + 1, _itemHistory.Count - _currentItemIndex - 1);
+            }
+
+            _itemHistory.Add(info);
+            _currentItemIndex = _itemHistory.Count - 1;
+
+            SendCurrentChangedMessage();
+        }
+
+
+        public void SetPrevious()
+        {
+            if (_currentItemIndex <= 0) return;
+            --_currentItemIndex;
+
+            SendCurrentChangedMessage();
+        }
+
+
+        public void SetForward()
+        {
+            if (_currentItemIndex >= _itemHistory.Count - 1) return;
+            ++_currentItemIndex;
+
+            SendCurrentChangedMessage();
+        }
+
+
+        private int FindItemIndex(DirectoryInfo info)
+        {
+            return _itemHistory.FindIndex(item => item.FullName == info.FullName);
+        }
+
+
+        private void SendCurrentChangedMessage()
+        {
+            OnPropertyChanged("CurrentDirectoryInfo");
+            Messenger.DispatchMessage(
+                new Coordination.InterModelMessage("CurrentDirectoryChanged", CurrentDirectoryInfo));
+        }
+
+
+        private List<DirectoryInfo> _itemHistory = new List<DirectoryInfo>();
+        private int _currentItemIndex;
+
     }
 }

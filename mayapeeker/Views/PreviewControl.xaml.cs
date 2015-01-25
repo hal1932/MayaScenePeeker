@@ -12,7 +12,7 @@ namespace mayapeeker.Views
             InitializeComponent();
 
             var viewModel = new ViewModels.PreviewViewModel();
-            DataContext = viewModel;
+            _container.DataContext = viewModel;
 
             Loaded += (sender, e) =>
             {

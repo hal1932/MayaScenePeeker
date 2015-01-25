@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace mayapeeker.Models
 {
@@ -12,9 +13,9 @@ namespace mayapeeker.Models
     {
         public class Item
         {
+            public FileSystemInfo FileSystemInfo { get; private set; }
             public FileInfo FileInfo { get; private set; }
             public DirectoryInfo DirectoryInfo { get; private set; }
-            public string FullName { get { return _baseInfo.FullName; } }
 
             public Item(FileSystemInfo info)
             {
@@ -29,10 +30,8 @@ namespace mayapeeker.Models
                     FileInfo = info as FileInfo;
                 }
 
-                _baseInfo = info;
+                FileSystemInfo = info;
             }
-
-            private FileSystemInfo _baseInfo;
         }
 
 
@@ -56,14 +55,14 @@ namespace mayapeeker.Models
 
         public DirectoryContainer()
         {
-            Messenger.AddMessageFilter("SelectedDirectoryChanged");
+            Messenger.AddMessageFilter("CurrentDirectoryChanged");
             Messenger.AddMessageFilter("FileFilterChanged");
 
             Messenger.MessageReceived += (sender, e) =>
             {
                 switch(e.Key)
                 {
-                    case "SelectedDirectoryChanged":
+                    case "CurrentDirectoryChanged":
                         Reload(e.Content as DirectoryInfo);
                         break;
 
@@ -78,10 +77,34 @@ namespace mayapeeker.Models
 
         public void Reload(DirectoryInfo info = null)
         {
+            if (Application.Current.Dispatcher.CheckAccess())
+            {
+                ReloadImpl(info);
+            }
+            else
+            {
+                Application.Current.Dispatcher.Invoke(() => ReloadImpl(info));
+            }
+        }
+
+
+        private void ReloadImpl(DirectoryInfo info)
+        {
+            if (info == null)
+            {
+                if (_currentDirectory == null) return;
+                else info = _currentDirectory;
+            }
+            else
+            {
+                if (_currentDirectory != null)
+                {
+                    if (info.FullName == _currentDirectory.FullName) return;
+                }
+            }
+
             if (_currentFilterArray == null) return;
 
-            if (info == null) info = _currentDirectory;
-            if (info == null) return;
 
             var items = info.GetDirectories().Select(dir => new Item(dir));
             foreach (var filter in _currentFilterArray)
@@ -92,6 +115,8 @@ namespace mayapeeker.Models
             ItemList = items.ToList();
 
             _currentDirectory = info;
+            Messenger.DispatchMessage(
+                new Coordination.InterModelMessage("CurrentDirectoryChanged", info));
         }
 
 

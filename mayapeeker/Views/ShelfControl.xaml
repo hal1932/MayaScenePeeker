@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
              xmlns:conv="clr-namespace:mayapeeker.Views.Converters"
              mc:Ignorable="d">
 
@@ -10,28 +12,49 @@
         <BitmapImage x:Key="Image_Back" UriSource="Images/back.png"/>
         <BitmapImage x:Key="Image_Forward" UriSource="Images/forward.png"/>
         <BitmapImage x:Key="Image_Up" UriSource="Images/up.png"/>
-        <conv:FullNameConverter x:Key="fullName"/>
+        <conv:PathFullNameConverter x:Key="fullName"/>
     </UserControl.Resources>
     
-    <DockPanel>
+    <DockPanel Name="_container">
         <Label DockPanel.Dock="Left" Content="ファイルの場所:"/>
 
         <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-            <Button Width="24" Margin="2">
+            <Button Width="24" Margin="2" IsEnabled="{Binding ExistsBackward}">
                 <Image Source="{StaticResource Image_Back}"/>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <ei:CallMethodAction TargetObject="{Binding}"
+                                             MethodName="ChangeToBackwardDirectory"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </Button>
-            <Button Width="24" Margin="2">
+
+            <Button Width="24" Margin="2" IsEnabled="{Binding ExistsForward}">
                 <Image Source="{StaticResource Image_Forward}"/>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <ei:CallMethodAction TargetObject="{Binding}"
+                                             MethodName="ChangeToForwardDirectory"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </Button>
+
             <Button Width="24" Margin="2">
                 <Image Source="{StaticResource Image_Up}"/>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <ei:CallMethodAction TargetObject="{Binding}"
+                                             MethodName="ChangeToParentDirectory"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </Button>
         </StackPanel>
 
         <DockPanel>
             <Button DockPanel.Dock="Right" Content="▼" Margin="0,2,2,2"/>
             <TextBox Margin="2,2,0,2"
-                     Text="{Binding PathContainer.CurrentDirectoryInfo, Converter={StaticResource fullName}}"/>
+                     Text="{Binding CurrentDirectoryPath, UpdateSourceTrigger=PropertyChanged}"
+                     KeyUp="TextBox_KeyUp"/>
         </DockPanel>
     </DockPanel>
 </UserControl>

@@ -9,7 +9,7 @@ using System.Windows.Data;
 
 namespace mayapeeker.Views.Converters
 {
-    public class FullNameConverter : IValueConverter
+    public class PathFullNameConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

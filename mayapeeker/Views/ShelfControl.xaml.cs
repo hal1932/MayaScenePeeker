@@ -13,7 +13,7 @@ namespace mayapeeker.Views
             InitializeComponent();
 
             var viewModel = new ViewModels.ShelfViewModel();
-            DataContext = viewModel;
+            _container.DataContext = viewModel;
 
             Loaded += (sender, e) =>
             {
@@ -24,6 +24,12 @@ namespace mayapeeker.Views
                     viewModel.Dispose();
                 };
             };
+        }
+
+        private void TextBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key != System.Windows.Input.Key.Return) return;
+            (_container.DataContext as ViewModels.ShelfViewModel).PushCurrentToHistory();
         }
     }
 }
