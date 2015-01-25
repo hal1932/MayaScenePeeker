@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d">
     <Grid>
-        <ListBox ItemsSource="{Binding DirectoryContainer.ItemArray}">
+        <ListBox ItemsSource="{Binding DirectoryContainer.ItemList}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Label Content="{Binding FullName}"/>

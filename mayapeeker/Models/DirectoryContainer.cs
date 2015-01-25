@@ -36,19 +36,19 @@ namespace mayapeeker.Models
         }
 
 
-        #region ItemArray変更通知プロパティ
-        private Item[] _ItemArray;
+        #region ItemList変更通知プロパティ
+        private List<Item> _ItemList;
 
-        public Item[] ItemArray
+        public List<Item> ItemList
         {
             get
-            { return _ItemArray; }
+            { return _ItemList; }
             set
             { 
-                if (_ItemArray == value)
+                if (_ItemList == value)
                     return;
-                _ItemArray = value;
-                OnPropertyChanged("ItemArray");
+                _ItemList = value;
+                OnPropertyChanged("ItemList");
             }
         }
         #endregion
@@ -66,24 +66,37 @@ namespace mayapeeker.Models
                     case "SelectedDirectoryChanged":
                         Reload(e.Content as DirectoryInfo);
                         break;
+
+                    case "FileFilterChanged":
+                        _currentFilterArray = e.Content as string[];
+                        Reload();
+                        break;
                 }
             };
         }
 
 
-        public void Reload(DirectoryInfo info)
+        public void Reload(DirectoryInfo info = null)
         {
-            var itemList = new List<Item>();
-            foreach (var dir in info.GetDirectories())
+            if (_currentFilterArray == null) return;
+
+            if (info == null) info = _currentDirectory;
+            if (info == null) return;
+
+            var items = info.GetDirectories().Select(dir => new Item(dir));
+            foreach (var filter in _currentFilterArray)
             {
-                itemList.Add(new Item(dir));
+                items = items.Concat(
+                    info.GetFiles(filter).Select(file => new Item(file)));
             }
-            foreach (var file in info.GetFiles())
-            {
-                itemList.Add(new Item(file));
-            }
-            ItemArray = itemList.ToArray();
+            ItemList = items.ToList();
+
+            _currentDirectory = info;
         }
+
+
+        private DirectoryInfo _currentDirectory;
+        private string[] _currentFilterArray;
 
     }
 }
