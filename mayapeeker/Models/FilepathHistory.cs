@@ -62,6 +62,9 @@ namespace mayapeeker.Models
         {
             if (info == null) return;
 
+            // 現在地が「最新のアイテム」を指していない場合、
+            // 履歴の整合性を保つために、現在地から先の履歴を削除して、
+            // 新しく追加されたものが「最新」になるようにする。
             if (_currentItemIndex < _itemHistory.Count - 1)
             {
                 _itemHistory.RemoveRange(
@@ -102,6 +105,8 @@ namespace mayapeeker.Models
         private void SendCurrentChangedMessage()
         {
             OnPropertyChanged("CurrentDirectoryInfo");
+            //OnPropertyChanged("ExistsBackward");
+            //OnPropertyChanged("ExistsForward");
             Messenger.DispatchMessage(
                 new Coordination.InterModelMessage("CurrentDirectoryChanged", CurrentDirectoryInfo));
         }
