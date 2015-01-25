@@ -46,6 +46,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -66,7 +67,9 @@
     </ApplicationDefinition>
     <Compile Include="Models\AppCache.cs" />
     <Compile Include="Models\AssociatedFiletype.cs" />
+    <Compile Include="Models\BookmarkList.cs" />
     <Compile Include="Models\Crc32\OptimizedCRC.cs" />
+    <Compile Include="Models\CsvFile.cs" />
     <Compile Include="Models\DirectoryContainer.cs" />
     <Compile Include="Models\Disposable.cs" />
     <Compile Include="Models\FilepathHistory.cs" />

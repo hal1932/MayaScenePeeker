@@ -3,9 +3,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
+             xmlns:conv="clr-namespace:mayapeeker.Views.Converters"
              mc:Ignorable="d">
-    <DockPanel>
+
+    <UserControl.Resources>
+        <conv:PathNameConverter x:Key="name"/>
+    </UserControl.Resources>
+
+    <DockPanel Name="_container">
         <Label DockPanel.Dock="Top" Content="フォルダ ブックマーク:"/>
-        <Button Content="ブックマークリスト"/>
+
+        <ListBox ItemsSource="{Binding Container.ItemList}"
+                 SelectedIndex="{Binding SelectedIndex, Mode=OneWayToSource}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding DirectoryInfo, Converter={StaticResource name}}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <ei:CallMethodAction
+                                    TargetObject="{Binding DataContext, ElementName=_container}"
+                                    MethodName="SelectItem"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ContentControl>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="追加" Command="{Binding AddCommand}"/>
+                    <MenuItem Header="削除" Command="{Binding RemoveCommand}"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
+        
     </DockPanel>
 </UserControl>

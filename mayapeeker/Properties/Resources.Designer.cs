@@ -77,5 +77,14 @@ namespace mayapeeker.Properties {
                 return ResourceManager.GetString("File_AssociatedFiletype", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to bookmark.txt.
+        /// </summary>
+        internal static string File_Bookmark {
+            get {
+                return ResourceManager.GetString("File_Bookmark", resourceCulture);
+            }
+        }
     }
 }

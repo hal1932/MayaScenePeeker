@@ -123,4 +123,7 @@
   <data name="File_AssociatedFiletype" xml:space="preserve">
     <value>associated_filetype.txt</value>
   </data>
+  <data name="File_Bookmark" xml:space="preserve">
+    <value>bookmark.txt</value>
+  </data>
 </root>
