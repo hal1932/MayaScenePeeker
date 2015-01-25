@@ -116,7 +116,7 @@ namespace mayapeeker.Models
 
             _currentDirectory = info;
             Messenger.DispatchMessage(
-                new Coordination.InterModelMessage("CurrentDirectoryChanged", info));
+                new Interactivity.InteractionMessage("CurrentDirectoryChanged", info));
         }
 
 

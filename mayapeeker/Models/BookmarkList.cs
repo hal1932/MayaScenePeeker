@@ -68,6 +68,10 @@ namespace mayapeeker.Models
 
         public void AddItem(Item item)
         {
+            var found = ItemList.FirstOrDefault(
+                i => i.DirectoryInfo.FullName == item.DirectoryInfo.FullName);
+            if (found != default(Item)) return;
+
             _csv.RowList.Add(new string[] { item.DirectoryInfo.FullName });
             ItemList.Add(item);
         }
@@ -86,7 +90,7 @@ namespace mayapeeker.Models
             if (!item.DirectoryInfo.Exists) return;
 
             Messenger.DispatchMessage(
-                new Coordination.InterModelMessage("CurrentDirectoryChanged", item.DirectoryInfo));
+                new Interactivity.InteractionMessage("CurrentDirectoryChanged", item.DirectoryInfo));
         }
 
 

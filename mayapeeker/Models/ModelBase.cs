@@ -11,10 +11,10 @@ namespace mayapeeker.Models
     {
         public ModelBase()
         {
-            Messenger = new Coordination.InterModelMessengar(this);
+            Messenger = new Interactivity.InteractionMessengar(this);
         }
 
 
-        protected Coordination.InterModelMessengar Messenger;
+        protected Interactivity.InteractionMessengar Messenger;
     }
 }

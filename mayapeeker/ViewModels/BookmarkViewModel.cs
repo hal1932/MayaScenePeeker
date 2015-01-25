@@ -1,4 +1,5 @@
 ﻿using mayapeeker.Models;
+using mayapeeker.Models.Interactivity;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Win32;
 using System.IO;
@@ -11,6 +12,7 @@ namespace mayapeeker.ViewModels
         public BookmarkContainer Container { get; set; }
         public int SelectedIndex { get; set; }
 
+        public DelegateCommand AddCurrentCommand { get; private set; }
         public DelegateCommand AddCommand { get; private set; }
         public DelegateCommand RemoveCommand { get; private set; }
 
@@ -19,8 +21,15 @@ namespace mayapeeker.ViewModels
         {
             Container = new BookmarkContainer();
 
+            AddCurrentCommand = new DelegateCommand(AddCurrent);
             AddCommand = new DelegateCommand(AddItem);
             RemoveCommand = new DelegateCommand(RemoveItem);
+
+            _messageListener.AddMessageFilter("CurrentDirectoryChanged");
+            _messageListener.MessageReceived += (sender, e) =>
+            {
+                _currentDirectory = e.Content as DirectoryInfo;
+            };
         }
 
 
@@ -43,6 +52,15 @@ namespace mayapeeker.ViewModels
         }
 
 
+        private void AddCurrent()
+        {
+            if (_currentDirectory != null)
+            {
+                Container.AddItem(new BookmarkContainer.Item(_currentDirectory));
+            }
+        }
+
+
         private void AddItem()
         {
             var dialog = new FolderBrowserDialog()
@@ -61,6 +79,10 @@ namespace mayapeeker.ViewModels
         {
             Container.RemoveItem(SelectedIndex);
         }
+
+
+        private DirectoryInfo _currentDirectory;
+        private InteractionMessageListener _messageListener = new InteractionMessageListener();
 
     }
 }

@@ -74,14 +74,13 @@
     <Compile Include="Models\Disposable.cs" />
     <Compile Include="Models\FilepathHistory.cs" />
     <Compile Include="Models\HashDb.cs" />
-    <Compile Include="Models\Coordination\InterModelMessage.cs" />
-    <Compile Include="Models\Coordination\InterModelMessengar.cs" />
+    <Compile Include="Models\Interactivity\InteractionMessage.cs" />
+    <Compile Include="Models\Interactivity\InteractionMessengar.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="ViewModels\BookmarkViewModel.cs" />
     <Compile Include="ViewModels\FileViewModel.cs" />
-    <Compile Include="ViewModels\OptionViewModel.cs" />
     <Compile Include="ViewModels\PreviewViewModel.cs" />
-    <Compile Include="ViewModels\ProjectViewModel.cs" />
+    <Compile Include="ViewModels\FileListViewModel.cs" />
     <Compile Include="ViewModels\ShelfViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\BookmarkControl.xaml.cs">
@@ -93,14 +92,11 @@
     <Compile Include="Views\FileControl.xaml.cs">
       <DependentUpon>FileControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\OptionControl.xaml.cs">
-      <DependentUpon>OptionControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\PreviewControl.xaml.cs">
       <DependentUpon>PreviewControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProjectControl.xaml.cs">
-      <DependentUpon>ProjectControl.xaml</DependentUpon>
+    <Compile Include="Views\FileListControl.xaml.cs">
+      <DependentUpon>FileListControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShelfControl.xaml.cs">
       <DependentUpon>ShelfControl.xaml</DependentUpon>
@@ -125,15 +121,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\OptionControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\PreviewControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ProjectControl.xaml">
+    <Page Include="Views\FileListControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -108,7 +108,7 @@ namespace mayapeeker.Models
             //OnPropertyChanged("ExistsBackward");
             //OnPropertyChanged("ExistsForward");
             Messenger.DispatchMessage(
-                new Coordination.InterModelMessage("CurrentDirectoryChanged", CurrentDirectoryInfo));
+                new Interactivity.InteractionMessage("CurrentDirectoryChanged", CurrentDirectoryInfo));
         }
 
 

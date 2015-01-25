@@ -3,16 +3,16 @@
 namespace mayapeeker.Views
 {
     /// <summary>
-    /// Interaction logic for PreviewControl.xaml
+    /// Interaction logic for OptionControl.xaml
     /// </summary>
-    public partial class PreviewControl : UserControl
+    public partial class OptionControl : UserControl
     {
-        public PreviewControl()
+        public OptionControl()
         {
             InitializeComponent();
 
             var viewModel = new ViewModels.PreviewViewModel();
-            _container.DataContext = viewModel;
+            DataContext = viewModel;
 
             Loaded += (sender, e) =>
             {

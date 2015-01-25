@@ -43,7 +43,7 @@ namespace mayapeeker.Models
 
                 OnPropertyChanged("SelectedFilter");
                 Messenger.DispatchMessage(
-                    new Coordination.InterModelMessage("FileFilterChanged", SelectedFilter));
+                    new Interactivity.InteractionMessage("FileFilterChanged", SelectedFilter));
             }
         }
         #endregion
