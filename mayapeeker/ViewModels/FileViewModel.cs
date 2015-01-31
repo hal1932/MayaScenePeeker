@@ -19,5 +19,11 @@ namespace mayapeeker.ViewModels
             base.Initialize();
         }
 
+
+        public void CloseApp()
+        {
+            Application.Current.Shutdown();
+        }
+
     }
 }
