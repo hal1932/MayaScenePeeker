@@ -4,15 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
-             xmlns:conv="clr-namespace:mayapeeker.Views.Converters"
+             xmlns:behaviors="clr-namespace:mayapeeker.Behaviors"
+             xmlns:converters="clr-namespace:mayapeeker.Views.Converters"
              mc:Ignorable="d">
 
     <UserControl.Resources>
         <BitmapImage x:Key="Image_Back" UriSource="Images/back.png"/>
         <BitmapImage x:Key="Image_Forward" UriSource="Images/forward.png"/>
         <BitmapImage x:Key="Image_Up" UriSource="Images/up.png"/>
-        <conv:PathFullNameConverter x:Key="fullName"/>
+        <converters:PathFullNameConverter x:Key="fullName"/>
     </UserControl.Resources>
     
     <DockPanel Name="_container">
@@ -23,8 +23,8 @@
                 <Image Source="{StaticResource Image_Back}"/>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <ei:CallMethodAction TargetObject="{Binding}"
-                                             MethodName="ChangeToBackwardDirectory"/>
+                        <behaviors:CallMethodAction SourceObject="{Binding}"
+                                                    MethodName="ChangeToBackwardDirectory"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
@@ -33,8 +33,8 @@
                 <Image Source="{StaticResource Image_Forward}"/>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <ei:CallMethodAction TargetObject="{Binding}"
-                                             MethodName="ChangeToForwardDirectory"/>
+                        <behaviors:CallMethodAction SourceObject="{Binding}"
+                                                    MethodName="ChangeToForwardDirectory"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
@@ -43,8 +43,8 @@
                 <Image Source="{StaticResource Image_Up}"/>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <ei:CallMethodAction TargetObject="{Binding}"
-                                             MethodName="ChangeToParentDirectory"/>
+                        <behaviors:CallMethodAction SourceObject="{Binding}"
+                                                    MethodName="ChangeToParentDirectory"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
