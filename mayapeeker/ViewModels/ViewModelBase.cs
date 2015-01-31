@@ -1,4 +1,5 @@
 ﻿using mayapeeker.Models;
+using mayapeeker.Models.Interactivity;
 using System;
 
 namespace mayapeeker.ViewModels
@@ -43,6 +44,10 @@ namespace mayapeeker.ViewModels
         private bool _disposed;
         private object _lockObj = new object();
         #endregion
+
+
+        // デフォルトでは受信のみ
+        protected InteractionMessengar Messenger = new InteractionMessengar();
 
     }
 }

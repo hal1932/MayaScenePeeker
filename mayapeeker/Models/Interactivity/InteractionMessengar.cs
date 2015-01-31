@@ -15,77 +15,24 @@ namespace mayapeeker.Models.Interactivity
     }
 
 
-    /// <summary>
-    /// M/VM の間でメッセージの受信だけを行う
-    /// </summary>
-    public class InteractionMessageListener : IDisposable
-    {
-        public event EventHandler<InteractionMessage> MessageReceived;
-
-
-        public InteractionMessageListener()
-        {
-            InteractionMessengar.AddListener(this);
-        }
-
-
-        #region IDisposable
-        ~InteractionMessageListener()
-        {
-            Dispose(false);
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            lock (this)
-            {
-                if (_disposed) return;
-                _disposed = true;
-
-                InteractionMessengar.RemoveListener(this);
-            }
-        }
-
-        private bool _disposed;
-        #endregion
-
-
-        public void AddMessageFilter(string filter)
-        {
-            _filterList.Add(filter);
-        }
-
-
-        internal void OnPeekMessage(object sender, InteractionMessage message)
-        {
-            if (MessageReceived == null) return;
-            if (_filterList.Count > 0 && !_filterList.Contains(message.Key)) return;
-
-            MessageReceived(sender, message);
-        }
-
-
-        private List<string> _filterList = new List<string>();
-
-    }
-
 
     /// <summary>
-    /// M/VM の間でメッセージの送受信を行う
+    /// メッセージの送受信を行う
     /// </summary>
     public class InteractionMessengar : IDisposable
     {
         public event EventHandler<InteractionMessage> MessageReceived;
 
 
+        public InteractionMessengar()
+        {
+            _listenOnly = true;
+        }
+
+
         public InteractionMessengar(ModelBase sender)
         {
+            _listenOnly = false;
             _messengerList.Add(this);
             _sender = sender;
         }
@@ -118,6 +65,21 @@ namespace mayapeeker.Models.Interactivity
         #endregion
 
 
+        public void SetAsDispatcher(object sender)
+        {
+            if (sender != null)
+            {
+                _listenOnly = false;
+                _sender = sender;
+            }
+            else
+            {
+                _listenOnly = true;
+                _sender = null;
+            }
+        }
+
+
         public void AddMessageFilter(string messageKey)
         {
             _keyFilter.Add(messageKey);
@@ -126,18 +88,9 @@ namespace mayapeeker.Models.Interactivity
 
         public void DispatchMessage(InteractionMessage message)
         {
+            if (_listenOnly) throw new InvalidOperationException("not allowed to dispatch message: listen only");
+
             Task.Factory.StartNew(() => DispatchMessageImpl(message));
-        }
-
-
-        internal static void AddListener(InteractionMessageListener listener)
-        {
-            _listenerList.Add(listener);
-        }
-
-        internal static void RemoveListener(InteractionMessageListener listener)
-        {
-            _listenerList.Remove(listener);
         }
 
 
@@ -157,18 +110,14 @@ namespace mayapeeker.Models.Interactivity
                 }
                 messenger.MessageReceived(_sender, message);
             }
-
-            foreach (var listener in _listenerList)
-            {
-                listener.OnPeekMessage(_sender, message);
-            }
         }
 
 
-        private static List<InteractionMessengar> _messengerList = new List<InteractionMessengar>();
-        private static List<InteractionMessageListener> _listenerList = new List<InteractionMessageListener>();
 
-        private ModelBase _sender;
+        private static List<InteractionMessengar> _messengerList = new List<InteractionMessengar>();
+
+        private bool _listenOnly;
+        private object _sender;
         private List<string> _keyFilter = new List<string>();
 
     }

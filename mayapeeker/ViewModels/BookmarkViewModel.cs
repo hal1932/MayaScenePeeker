@@ -15,8 +15,8 @@ namespace mayapeeker.ViewModels
         {
             Container = new BookmarkContainer();
 
-            _messageListener.AddMessageFilter("CurrentDirectoryChanged");
-            _messageListener.MessageReceived += (sender, e) =>
+            Messenger.AddMessageFilter("CurrentDirectoryChanged");
+            Messenger.MessageReceived += (sender, e) =>
             {
                 _currentDirectory = e.Content as DirectoryInfo;
             };
@@ -72,7 +72,6 @@ namespace mayapeeker.ViewModels
 
 
         private DirectoryInfo _currentDirectory;
-        private InteractionMessageListener _messageListener = new InteractionMessageListener();
 
     }
 }
