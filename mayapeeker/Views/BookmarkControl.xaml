@@ -10,11 +10,18 @@
              mc:Ignorable="d">
 
     <UserControl.Resources>
+        <BitmapImage x:Key="Image_Database" UriSource="Images/database.png"/>
+        <BitmapImage x:Key="Image_Plus" UriSource="Images/plus.png"/>
+        <BitmapImage x:Key="Image_Plus1" UriSource="Images/plus1.png"/>
+        <BitmapImage x:Key="Image_Minus" UriSource="Images/minus.png"/>
         <converters:PathNameConverter x:Key="name"/>
     </UserControl.Resources>
 
     <DockPanel Name="_container">
-        <Label DockPanel.Dock="Top" Content="フォルダ ブックマーク:"/>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <Image Width="24" Source="{StaticResource Image_Database}"/>
+            <Label Content="ブックマーク"/>
+        </StackPanel>
 
         <ListBox ItemsSource="{Binding Container.ItemList}"
                  SelectedIndex="{Binding SelectedIndex, Mode=OneWayToSource}">
@@ -35,6 +42,9 @@
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="現在の場所を追加">
+                        <MenuItem.Icon>
+                            <Image Source="{StaticResource Image_Plus1}"/>
+                        </MenuItem.Icon>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <behaviors:CallMethodAction SourceObject="{Binding}"
@@ -44,6 +54,9 @@
                     </MenuItem>
 
                     <MenuItem Header="追加">
+                        <MenuItem.Icon>
+                            <Image Source="{StaticResource Image_Plus}"/>
+                        </MenuItem.Icon>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <behaviors:CallMethodAction SourceObject="{Binding}"
@@ -53,6 +66,9 @@
                     </MenuItem>
 
                     <MenuItem Header="削除">
+                        <MenuItem.Icon>
+                            <Image Source="{StaticResource Image_Minus}"/>
+                        </MenuItem.Icon>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <behaviors:CallMethodAction SourceObject="{Binding}"
