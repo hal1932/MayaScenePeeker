@@ -72,6 +72,17 @@ namespace mayapeeker.Models
         }
 
 
+        public bool TryGetValue(int index, out FileSystemInfo value)
+        {
+            value = null;
+            if (ItemList == null) return false;
+            if (index < 0 || ItemList.Count < index) return false;
+
+            value = ItemList[index].FileSystemInfo;
+            return true;
+        }
+
+
         public void Reload(DirectoryInfo info = null)
         {
             if (Application.Current.Dispatcher.CheckAccess())

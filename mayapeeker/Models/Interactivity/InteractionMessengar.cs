@@ -27,6 +27,7 @@ namespace mayapeeker.Models.Interactivity
         public InteractionMessengar()
         {
             _listenOnly = true;
+            _messengerList.Add(this);
         }
 
 

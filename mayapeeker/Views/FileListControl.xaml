@@ -14,7 +14,7 @@
     
     <Grid Name="_container">
         <ListBox ItemsSource="{Binding DirectoryContainer.ItemList}"
-                 SelectedIndex="{Binding SelectedDirectoryIndex, Mode=OneWayToSource}">
+                 SelectedIndex="{Binding SelectedItemIndex, Mode=OneWayToSource}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <ContentControl Content="{Binding FileSystemInfo, Converter={StaticResource name}}">
