@@ -6,28 +6,80 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:converters="clr-namespace:mayapeeker.Views.Converters"
              xmlns:behaviors="clr-namespace:mayapeeker.Behaviors"
+             xmlns:views="clr-namespace:mayapeeker.Views"
              mc:Ignorable="d">
+
     
     <UserControl.Resources>
-        <converters:PathNameConverter x:Key="name"/>
+        <BitmapImage x:Key="Image_Search" UriSource="Images/search.png"/>
     </UserControl.Resources>
     
-    <Grid Name="_container">
-        <ListBox ItemsSource="{Binding DirectoryContainer.ItemList}"
+    
+    <DockPanel Name="_container">
+        <DockPanel DockPanel.Dock="Top" Height="18">
+            <Image Source="{StaticResource Image_Search}"/>
+            <TextBox Text="{Binding SearchFilter, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+        </DockPanel>
+        
+        <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 VerticalAlignment="Stretch"
+                 ItemsSource="{Binding DirectoryContainer.ItemList}"
                  SelectedIndex="{Binding SelectedItemIndex, Mode=OneWayToSource}">
-            <ItemsControl.ItemTemplate>
+
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" IsItemsHost="True"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+
+            <!--
+                ListBoxItem のデフォルトスタイルで親パネルの Horizontal/VerticalContentAlignment を
+                参照しているが、WrapPanel はそれを持っていないので、デフォルトスタイルを上書きしておく
+            -->
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="OverridesDefaultStyle" Value="True"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border Name="border"
+                                        BorderThickness="2" CornerRadius="2"
+                                        Background="{TemplateBinding Background}">
+                                    <ContentPresenter/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="border" Property="BorderBrush" Value="Red"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+
+            <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <ContentControl Content="{Binding FileSystemInfo, Converter={StaticResource name}}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseDoubleClick">
-                                <behaviors:CallMethodAction
-                                    SourceObject="{Binding DataContext, ElementName=_container}"
-                                    MethodName="SelectItem"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ContentControl>
+                    <StackPanel Orientation="Vertical" Margin="3">
+                        <views:ImageIcon SourceInfo="{Binding FileSystemInfo}"
+                                         Width="100" Height="100">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDoubleClick">
+                                    <behaviors:CallMethodAction
+                                        SourceObject="{Binding DataContext, ElementName=_container}"
+                                        MethodName="SelectItem"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </views:ImageIcon>
+                    
+                        <TextBlock Text="{Binding FileSystemInfo.Name}"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
                 </DataTemplate>
-            </ItemsControl.ItemTemplate>
+            </ListBox.ItemTemplate>
+        
         </ListBox>
-    </Grid>
+        
+    </DockPanel>
+
 </UserControl>

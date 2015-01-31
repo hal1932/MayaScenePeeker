@@ -9,6 +9,7 @@ namespace mayapeeker.ViewModels
     {
         public DirectoryContainer DirectoryContainer { get; set; }
 
+        #region SelectedItemIndex
         // OneWayToSource だから PropertyChanged 対応しない
         public int SelectedItemIndex
         {
@@ -29,6 +30,15 @@ namespace mayapeeker.ViewModels
             }
         }
         private int _selectedItemIndex;
+        #endregion
+
+        public string SearchFilter
+        {
+            set
+            {
+                DirectoryContainer.ApplyFilter(value);
+            }
+        }
 
 
 

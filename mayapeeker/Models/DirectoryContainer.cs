@@ -83,6 +83,26 @@ namespace mayapeeker.Models
         }
 
 
+        public void ApplyFilter(string filter = null)
+        {
+            if (_baseList == null) return;
+
+            if (filter == null) filter = _currentFilter;
+
+            if (filter == null)
+            {
+                ItemList = _baseList;
+                return;
+            }
+
+            ItemList = _baseList
+                .Where(item => item.FileSystemInfo.Name.Contains(filter))
+                .ToList();
+
+            _currentFilter = filter;
+        }
+
+
         public void Reload(DirectoryInfo info = null)
         {
             if (Application.Current.Dispatcher.CheckAccess())
@@ -120,7 +140,9 @@ namespace mayapeeker.Models
                 items = items.Concat(
                     info.GetFiles(filter).Select(file => new Item(file)));
             }
-            ItemList = items.ToList();
+            _baseList = items.ToList();
+
+            ApplyFilter();
 
             _currentDirectory = info;
             Messenger.DispatchMessage(
@@ -130,6 +152,9 @@ namespace mayapeeker.Models
 
         private DirectoryInfo _currentDirectory;
         private string[] _currentFilterArray;
+        private List<Item> _baseList;
+
+        private string _currentFilter;
 
     }
 }

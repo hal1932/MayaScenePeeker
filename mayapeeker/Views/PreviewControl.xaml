@@ -6,8 +6,6 @@
              mc:Ignorable="d">
     <Grid>
         <DockPanel>
-            <Label DockPanel.Dock="Top" Content="プレビュー"/>
-            
             <ListBox ItemsSource="{Binding ItemList}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
