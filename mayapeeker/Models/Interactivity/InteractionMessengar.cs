@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace mayapeeker.Models.Interactivity
@@ -19,7 +16,7 @@ namespace mayapeeker.Models.Interactivity
 
 
     /// <summary>
-    /// メッセージの受信だけを行う
+    /// M/VM の間でメッセージの受信だけを行う
     /// </summary>
     public class InteractionMessageListener : IDisposable
     {
@@ -80,7 +77,7 @@ namespace mayapeeker.Models.Interactivity
 
 
     /// <summary>
-    /// メッセージの送受信を行う
+    /// M/VM の間でメッセージの送受信を行う
     /// </summary>
     public class InteractionMessengar : IDisposable
     {

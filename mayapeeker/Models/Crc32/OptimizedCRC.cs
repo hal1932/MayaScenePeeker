@@ -1,6 +1,5 @@
 // http://dev.khsu.ru/el/crc32/
 using System;
-using System.IO;
 
 namespace Crc32
 {

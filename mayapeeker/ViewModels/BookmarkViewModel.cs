@@ -1,7 +1,5 @@
 ﻿using mayapeeker.Models;
 using mayapeeker.Models.Interactivity;
-using Microsoft.Practices.Prism.Commands;
-using Microsoft.Win32;
 using System.IO;
 using System.Windows.Forms;
 
@@ -12,18 +10,10 @@ namespace mayapeeker.ViewModels
         public BookmarkContainer Container { get; set; }
         public int SelectedIndex { get; set; }
 
-        public DelegateCommand AddCurrentCommand { get; private set; }
-        public DelegateCommand AddCommand { get; private set; }
-        public DelegateCommand RemoveCommand { get; private set; }
-
 
         public BookmarkViewModel()
         {
             Container = new BookmarkContainer();
-
-            AddCurrentCommand = new DelegateCommand(AddCurrent);
-            AddCommand = new DelegateCommand(AddItem);
-            RemoveCommand = new DelegateCommand(RemoveItem);
 
             _messageListener.AddMessageFilter("CurrentDirectoryChanged");
             _messageListener.MessageReceived += (sender, e) =>
@@ -52,7 +42,7 @@ namespace mayapeeker.ViewModels
         }
 
 
-        private void AddCurrent()
+        public void AddCurrent()
         {
             if (_currentDirectory != null)
             {
@@ -61,7 +51,7 @@ namespace mayapeeker.ViewModels
         }
 
 
-        private void AddItem()
+        public void AddItem()
         {
             var dialog = new FolderBrowserDialog()
             {
@@ -75,7 +65,7 @@ namespace mayapeeker.ViewModels
         }
 
 
-        private void RemoveItem()
+        public void RemoveItem()
         {
             Container.RemoveItem(SelectedIndex);
         }

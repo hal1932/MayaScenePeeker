@@ -35,15 +35,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Practices.Prism.Interactivity">
-      <HintPath>external\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Prism.Mvvm">
-      <HintPath>external\Microsoft.Practices.Prism.Mvvm.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Prism.SharedInterfaces">
-      <HintPath>external\Microsoft.Practices.Prism.SharedInterfaces.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -65,8 +56,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\CallMethodAction.cs" />
     <Compile Include="Models\AppCache.cs" />
     <Compile Include="Models\AssociatedFiletype.cs" />
+    <Compile Include="Models\BindableBase.cs" />
     <Compile Include="Models\BookmarkList.cs" />
     <Compile Include="Models\Crc32\OptimizedCRC.cs" />
     <Compile Include="Models\CsvFile.cs" />
@@ -76,6 +69,7 @@
     <Compile Include="Models\HashDb.cs" />
     <Compile Include="Models\Interactivity\InteractionMessage.cs" />
     <Compile Include="Models\Interactivity\InteractionMessengar.cs" />
+    <Compile Include="Models\MethodBinder.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="ViewModels\BookmarkViewModel.cs" />
     <Compile Include="ViewModels\FileViewModel.cs" />

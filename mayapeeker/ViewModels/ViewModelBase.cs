@@ -1,4 +1,4 @@
-﻿using Microsoft.Practices.Prism.Mvvm;
+﻿using mayapeeker.Models;
 using System;
 
 namespace mayapeeker.ViewModels

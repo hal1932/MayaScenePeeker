@@ -1,5 +1,4 @@
 ﻿
-using System.Diagnostics;
 using System.IO;
 namespace mayapeeker.ViewModels
 {
@@ -17,7 +16,7 @@ namespace mayapeeker.ViewModels
                 if (_CurrentDirectoryPath == value)
                     return;
                 _CurrentDirectoryPath = value;
-                OnPropertyChanged("CurrentDirectoryPath");
+                RaisePropertyChanged("CurrentDirectoryPath");
             }
         }
         #endregion
@@ -34,7 +33,7 @@ namespace mayapeeker.ViewModels
                 if (_ExistsBackward == value)
                     return;
                 _ExistsBackward = value;
-                OnPropertyChanged("ExistsBackward");
+                RaisePropertyChanged("ExistsBackward");
             }
         }
         #endregion
@@ -51,7 +50,7 @@ namespace mayapeeker.ViewModels
                 if (_ExistsForward == value)
                     return;
                 _ExistsForward = value;
-                OnPropertyChanged("ExistsForward");
+                RaisePropertyChanged("ExistsForward");
             }
         }
         #endregion

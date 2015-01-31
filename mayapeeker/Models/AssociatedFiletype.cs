@@ -1,10 +1,5 @@
-﻿using Microsoft.Practices.Prism.Mvvm;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace mayapeeker.Models
 {
@@ -22,7 +17,7 @@ namespace mayapeeker.Models
                 if (_LabelArray == value)
                     return;
                 _LabelArray = value;
-                OnPropertyChanged("LabelArray");
+                RaisePropertyChanged("LabelArray");
             }
         }
         #endregion
@@ -39,9 +34,9 @@ namespace mayapeeker.Models
                 if (_SelectedIndex == value)
                     return;
                 _SelectedIndex = value;
-                OnPropertyChanged("SelectedIndex");
+                RaisePropertyChanged("SelectedIndex");
 
-                OnPropertyChanged("SelectedFilter");
+                RaisePropertyChanged("SelectedFilter");
                 Messenger.DispatchMessage(
                     new Interactivity.InteractionMessage("FileFilterChanged", SelectedFilter));
             }

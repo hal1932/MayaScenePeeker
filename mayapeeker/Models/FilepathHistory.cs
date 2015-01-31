@@ -1,11 +1,6 @@
-﻿using Microsoft.Practices.Prism.Mvvm;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace mayapeeker.Models
 {
@@ -104,9 +99,9 @@ namespace mayapeeker.Models
 
         private void SendCurrentChangedMessage()
         {
-            OnPropertyChanged("CurrentDirectoryInfo");
-            //OnPropertyChanged("ExistsBackward");
-            //OnPropertyChanged("ExistsForward");
+            RaisePropertyChanged("CurrentDirectoryInfo");
+            //RaisePropertyChanged("ExistsBackward");
+            //RaisePropertyChanged("ExistsForward");
             Messenger.DispatchMessage(
                 new Interactivity.InteractionMessage("CurrentDirectoryChanged", CurrentDirectoryInfo));
         }

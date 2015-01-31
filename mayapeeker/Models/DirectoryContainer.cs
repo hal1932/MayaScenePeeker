@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace mayapeeker.Models
@@ -47,7 +44,7 @@ namespace mayapeeker.Models
                 if (_ItemList == value)
                     return;
                 _ItemList = value;
-                OnPropertyChanged("ItemList");
+                RaisePropertyChanged("ItemList");
             }
         }
         #endregion
