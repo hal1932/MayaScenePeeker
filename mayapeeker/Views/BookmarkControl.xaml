@@ -6,11 +6,11 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
              xmlns:behaviors="clr-namespace:mayapeeker.Behaviors"
-             xmlns:conv="clr-namespace:mayapeeker.Views.Converters"
+             xmlns:converters="clr-namespace:mayapeeker.Views.Converters"
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <conv:PathNameConverter x:Key="name"/>
+        <converters:PathNameConverter x:Key="name"/>
     </UserControl.Resources>
 
     <DockPanel Name="_container">
@@ -23,8 +23,8 @@
                     <ContentControl Content="{Binding DirectoryInfo, Converter={StaticResource name}}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseDoubleClick">
-                                <ei:CallMethodAction
-                                    TargetObject="{Binding DataContext, ElementName=_container}"
+                                <behaviors:CallMethodAction
+                                    SourceObject="{Binding DataContext, ElementName=_container}"
                                     MethodName="SelectItem"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
