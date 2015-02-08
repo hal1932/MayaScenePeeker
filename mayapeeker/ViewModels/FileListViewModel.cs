@@ -32,6 +32,24 @@ namespace mayapeeker.ViewModels
         private int _selectedItemIndex;
         #endregion
 
+        #region ImplViewModel変更通知プロパティ
+        private FileListImpl.FileListImplBase _ImplViewModel;
+
+        public FileListImpl.FileListImplBase ImplViewModel
+        {
+            get
+            { return _ImplViewModel; }
+            set
+            { 
+                if (_ImplViewModel == value)
+                    return;
+                _ImplViewModel = value;
+                RaisePropertyChanged("ImplViewModel");
+            }
+        }
+        #endregion
+
+
         public string SearchFilter
         {
             set
@@ -65,6 +83,30 @@ namespace mayapeeker.ViewModels
             else
             {
                 Debug.WriteLine("  +++ open +++ " + item.FileInfo.FullName);
+            }
+        }
+
+
+        public void SwitchToIconView()
+        {
+            if (!(ImplViewModel is FileListImpl.IconView))
+            {
+                ImplViewModel = new FileListImpl.IconView()
+                {
+                    DirectoryContainer = DirectoryContainer,
+                };
+            }
+        }
+
+
+        public void SwitchToNameView()
+        {
+            if (!(ImplViewModel is FileListImpl.NameView))
+            {
+                ImplViewModel = new FileListImpl.NameView()
+                {
+                    DirectoryContainer = DirectoryContainer,
+                };
             }
         }
 

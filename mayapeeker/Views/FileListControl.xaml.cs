@@ -19,13 +19,6 @@ namespace mayapeeker.Views
             {
                 viewModel.Initialize();
             };
-
-            _listBox.PreviewKeyUp += (sender, e) =>
-            {
-                if (e.Key == Key.Enter)
-                {
-                }
-            };
         }
     }
 }

@@ -78,6 +78,9 @@
     <Compile Include="Models\MethodBinder.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="ViewModels\BookmarkViewModel.cs" />
+    <Compile Include="ViewModels\FileListImpl\FileListImplBase.cs" />
+    <Compile Include="ViewModels\FileListImpl\NameView.cs" />
+    <Compile Include="ViewModels\FileListImpl\IconView.cs" />
     <Compile Include="ViewModels\FileViewModel.cs" />
     <Compile Include="ViewModels\PreviewViewModel.cs" />
     <Compile Include="ViewModels\FileListViewModel.cs" />
@@ -91,6 +94,12 @@
     <Compile Include="Views\Converters\PathNameConverter.cs" />
     <Compile Include="Views\FileControl.xaml.cs">
       <DependentUpon>FileControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FileListImpl\NameView.xaml.cs">
+      <DependentUpon>NameView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FileListImpl\IconView.xaml.cs">
+      <DependentUpon>IconView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ImageIcon.cs" />
     <Compile Include="Views\PreviewControl.xaml.cs">
@@ -107,6 +116,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FileControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FileListImpl\NameView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FileListImpl\IconView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -167,6 +184,8 @@
     <Content Include="associated_filetype.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Views\Images\nameview.png" />
+    <Resource Include="Views\Images\iconview.png" />
     <Resource Include="Views\Images\folder.png" />
     <Resource Include="main.ico" />
     <Resource Include="Views\Images\expand.png" />
