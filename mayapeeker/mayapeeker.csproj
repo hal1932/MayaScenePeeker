@@ -40,6 +40,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
@@ -60,9 +61,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviors\CallMethodAction.cs" />
+    <Compile Include="Behaviors\MouseDoubleClickBehavior.cs" />
     <Compile Include="Models\AppCache.cs" />
     <Compile Include="Models\AssociatedFiletype.cs" />
     <Compile Include="Models\BindableBase.cs" />
+    <Compile Include="Models\BitmapImageContainer.cs" />
     <Compile Include="Models\BookmarkList.cs" />
     <Compile Include="Models\Crc32\OptimizedCRC.cs" />
     <Compile Include="Models\CsvFile.cs" />
@@ -164,6 +167,7 @@
     <Content Include="associated_filetype.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Views\Images\folder.png" />
     <Resource Include="main.ico" />
     <Resource Include="Views\Images\expand.png" />
     <Resource Include="Views\Images\database.png" />

@@ -21,7 +21,8 @@
             <TextBox Text="{Binding SearchFilter, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
         </DockPanel>
         
-        <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+        <ListBox Name="_listBox"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  VerticalAlignment="Stretch"
                  ItemsSource="{Binding DirectoryContainer.ItemList}"
                  SelectedIndex="{Binding SelectedItemIndex, Mode=OneWayToSource}">
@@ -60,9 +61,8 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Vertical" Margin="3">
-                        <views:ImageIcon SourceInfo="{Binding FileSystemInfo}"
-                                         Width="100" Height="100">
+                    <StackPanel Orientation="Vertical" Width="100" Margin="3">
+                        <views:ImageIcon SourceInfo="{Binding FileSystemInfo}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseDoubleClick">
                                     <behaviors:CallMethodAction
@@ -73,6 +73,7 @@
                         </views:ImageIcon>
                     
                         <TextBlock Text="{Binding FileSystemInfo.Name}"
+                                   TextWrapping="Wrap"
                                    HorizontalAlignment="Center"/>
                     </StackPanel>
                 </DataTemplate>

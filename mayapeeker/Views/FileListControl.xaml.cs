@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace mayapeeker.Views
 {
@@ -17,6 +18,13 @@ namespace mayapeeker.Views
             Loaded += (sender, e) =>
             {
                 viewModel.Initialize();
+            };
+
+            _listBox.PreviewKeyUp += (sender, e) =>
+            {
+                if (e.Key == Key.Enter)
+                {
+                }
             };
         }
     }

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using mayapeeker.Models;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,7 +39,7 @@ namespace mayapeeker.Views
         // Using a DependencyProperty as the backing store for SourcePath.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SourcePathProperty =
             DependencyProperty.Register(
-                "SourceInfo", typeof(string),
+                "SourceInfo", typeof(FileSystemInfo),
                 typeof(ImageIcon),
                 new PropertyMetadata(OnSourceInfoChanged));
         #endregion
@@ -46,34 +48,50 @@ namespace mayapeeker.Views
         private static void OnSourceInfoChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var imageIcon = (ImageIcon)d;
+            var info = (FileSystemInfo)e.NewValue;
 
-            // set tmp image
-            var bitmap = new BitmapImage();
+            BitmapImage image;
+            if (info.Attributes == FileAttributes.Directory)
             {
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(@"D:\home\Pictures\ScreenShot\2014y09m20d_135341036.jpg");
-                bitmap.EndInit();
-                bitmap.Freeze();
+                image = _imageContainer.CreateImage("directory", Properties.Resources.folder);
+                imageIcon.Stretch = System.Windows.Media.Stretch.None;
             }
-            imageIcon.Source = bitmap;
+            else
+            {
+                image = _imageContainer.CreateImage(info.FullName, info);
+                imageIcon.Stretch = System.Windows.Media.Stretch.Uniform;
+            }
+            imageIcon.Source = image;
         }
 
 
         public ImageIcon()
         {
-            PreviewMouseDown += (sender, e) =>
-            {
-                if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
-                {
-                    RaiseEvent(
-                        new MouseButtonEventArgs(e.MouseDevice, e.Timestamp, e.ChangedButton)
-                        {
-                            RoutedEvent = MouseDoubleClickEvent,
-                            Source = this,
-                        });
-                }
-            };
+            PreviewMouseDown += ImageIcon_PreviewMouseDown;
         }
+
+
+        ~ImageIcon()
+        {
+            PreviewMouseDown -= ImageIcon_PreviewMouseDown; 
+        }
+
+
+        void ImageIcon_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+            {
+                RaiseEvent(
+                    new MouseButtonEventArgs(e.MouseDevice, e.Timestamp, e.ChangedButton)
+                    {
+                        RoutedEvent = MouseDoubleClickEvent,
+                        Source = this,
+                    });
+            }
+        }
+
+
+        private static BitmapImageContainer _imageContainer = new BitmapImageContainer();
 
     }
 }
