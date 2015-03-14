@@ -4,7 +4,7 @@ using System.Text;
 
 namespace mayapeeker.Models
 {
-    public class HashDb : Disposable
+    public class HashDb : ModelBase
     {
         public string this[string key]
         {

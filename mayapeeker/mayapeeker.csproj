@@ -70,7 +70,6 @@
     <Compile Include="Models\Crc32\OptimizedCRC.cs" />
     <Compile Include="Models\CsvFile.cs" />
     <Compile Include="Models\DirectoryContainer.cs" />
-    <Compile Include="Models\Disposable.cs" />
     <Compile Include="Models\FilepathHistory.cs" />
     <Compile Include="Models\HashDb.cs" />
     <Compile Include="Models\Interactivity\InteractionMessage.cs" />

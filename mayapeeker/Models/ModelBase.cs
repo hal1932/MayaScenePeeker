@@ -8,7 +8,6 @@ namespace mayapeeker.Models
             Messenger = new Interactivity.InteractionMessenger(this);
         }
 
-
         protected Interactivity.InteractionMessenger Messenger;
     }
 }
