@@ -32,6 +32,7 @@ namespace mayapeeker.ViewModels
 
         protected override void DisposeUnmanagedResource()
         {
+            Messenger.RemoveMessageHandler();
             Container.Save();
         }
 

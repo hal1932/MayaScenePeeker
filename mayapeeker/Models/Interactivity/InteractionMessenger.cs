@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace mayapeeker.Models.Interactivity
@@ -44,6 +45,7 @@ namespace mayapeeker.Models.Interactivity
                 _disposed = true;
 
                 _messengerList.Remove(this);
+                RemoveMessageHandler();
             }
         }
 
@@ -78,6 +80,39 @@ namespace mayapeeker.Models.Interactivity
             else
             {
                 _handlerDic[messageKey] = new List<HandlerInfo>() { info };
+            }
+        }
+
+
+        public void RemoveMessageHandler(string messageKey = null)
+        {
+            if (messageKey == null)
+            {
+                var removedList = new List<string>();
+                foreach (var item in _handlerDic)
+                {
+                    item.Value.RemoveAll(info => info.Instance == this);
+                    if (item.Value.Count == 0)
+                    {
+                        removedList.Add(item.Key);
+                    }
+                }
+                foreach (var removed in removedList)
+                {
+                    _handlerDic.Remove(removed);
+                }
+            }
+            else
+            {
+                List<HandlerInfo> handlerInfoList;
+                if (_handlerDic.TryGetValue(messageKey, out handlerInfoList))
+                {
+                    handlerInfoList.RemoveAll(info => info.Instance == this);
+                    if (handlerInfoList.Count == 0)
+                    {
+                        _handlerDic.Remove(messageKey);
+                    }
+                }
             }
         }
 
@@ -125,7 +160,7 @@ namespace mayapeeker.Models.Interactivity
                 Handler = handler;
             }
         }
-        private Dictionary<string, List<HandlerInfo>> _handlerDic = new Dictionary<string, List<HandlerInfo>>();
+        private static Dictionary<string, List<HandlerInfo>> _handlerDic = new Dictionary<string, List<HandlerInfo>>();
 
     }
 }
