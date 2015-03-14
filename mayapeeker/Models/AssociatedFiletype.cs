@@ -10,14 +10,12 @@ namespace mayapeeker.Models
 
         public string[] LabelArray
         {
-            get
-            { return _LabelArray; }
+            get { return _LabelArray; }
             set
             { 
-                if (_LabelArray == value)
-                    return;
+                if (_LabelArray == value) return;
                 _LabelArray = value;
-                RaisePropertyChanged("LabelArray");
+                RaisePropertyChanged();
             }
         }
         #endregion
@@ -27,14 +25,12 @@ namespace mayapeeker.Models
 
         public int SelectedIndex
         {
-            get
-            { return _SelectedIndex; }
+            get { return _SelectedIndex; }
             set
             { 
-                if (_SelectedIndex == value)
-                    return;
+                if (_SelectedIndex == value) return;
                 _SelectedIndex = value;
-                RaisePropertyChanged("SelectedIndex");
+                RaisePropertyChanged();
 
                 RaisePropertyChanged("SelectedFilter");
                 Messenger.DispatchMessage(

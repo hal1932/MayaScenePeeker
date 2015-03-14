@@ -9,14 +9,12 @@ namespace mayapeeker.ViewModels
 
         public string CurrentDirectoryPath
         {
-            get
-            { return _CurrentDirectoryPath; }
+            get { return _CurrentDirectoryPath; }
             set
             { 
-                if (_CurrentDirectoryPath == value)
-                    return;
+                if (_CurrentDirectoryPath == value) return;
                 _CurrentDirectoryPath = value;
-                RaisePropertyChanged("CurrentDirectoryPath");
+                RaisePropertyChanged();
             }
         }
         #endregion
@@ -26,14 +24,12 @@ namespace mayapeeker.ViewModels
 
         public bool ExistsBackward
         {
-            get
-            { return _ExistsBackward; }
+            get { return _ExistsBackward; }
             set
             { 
-                if (_ExistsBackward == value)
-                    return;
+                if (_ExistsBackward == value) return;
                 _ExistsBackward = value;
-                RaisePropertyChanged("ExistsBackward");
+                RaisePropertyChanged();
             }
         }
         #endregion
@@ -43,14 +39,12 @@ namespace mayapeeker.ViewModels
 
         public bool ExistsForward
         {
-            get
-            { return _ExistsForward; }
+            get { return _ExistsForward; }
             set
             { 
-                if (_ExistsForward == value)
-                    return;
+                if (_ExistsForward == value) return;
                 _ExistsForward = value;
-                RaisePropertyChanged("ExistsForward");
+                RaisePropertyChanged();
             }
         }
         #endregion

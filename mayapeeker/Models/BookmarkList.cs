@@ -23,14 +23,12 @@ namespace mayapeeker.Models
 
         public ObservableCollection<Item> ItemList
         {
-            get
-            { return _ItemList; }
+            get { return _ItemList; }
             set
             { 
-                if (_ItemList == value)
-                    return;
+                if (_ItemList == value) return;
                 _ItemList = value;
-                RaisePropertyChanged("ItemList");
+                RaisePropertyChanged();
             }
         }
         #endregion

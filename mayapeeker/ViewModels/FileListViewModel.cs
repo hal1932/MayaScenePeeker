@@ -37,14 +37,12 @@ namespace mayapeeker.ViewModels
 
         public FileListImpl.FileListImplBase ImplViewModel
         {
-            get
-            { return _ImplViewModel; }
+            get { return _ImplViewModel; }
             set
-            { 
-                if (_ImplViewModel == value)
-                    return;
+            {
+                if (_ImplViewModel == value) return;
                 _ImplViewModel = value;
-                RaisePropertyChanged("ImplViewModel");
+                RaisePropertyChanged();
             }
         }
         #endregion

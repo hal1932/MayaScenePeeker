@@ -13,14 +13,12 @@ namespace mayapeeker.ViewModels
 
         public string[] ItemList
         {
-            get
-            { return _ItemList; }
+            get { return _ItemList; }
             set
             { 
-                if (_ItemList == value)
-                    return;
+                if (_ItemList == value) return;
                 _ItemList = value;
-                RaisePropertyChanged("ItemList");
+                RaisePropertyChanged();
             }
         }
         #endregion

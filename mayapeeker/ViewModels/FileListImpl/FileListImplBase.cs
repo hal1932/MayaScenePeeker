@@ -14,14 +14,12 @@ namespace mayapeeker.ViewModels.FileListImpl
 
         public DirectoryContainer DirectoryContainer
         {
-            get
-            { return _DirectoryContainer; }
+            get { return _DirectoryContainer; }
             set
             { 
-                if (_DirectoryContainer == value)
-                    return;
+                if (_DirectoryContainer == value) return;
                 _DirectoryContainer = value;
-                RaisePropertyChanged("DirectoryContainer");
+                RaisePropertyChanged();
             }
         }
         #endregion
