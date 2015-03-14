@@ -24,12 +24,13 @@ namespace mayapeeker.Models
 
         public FilepathHistory()
         {
-            Messenger.AddMessageHandler("CurrentDirectoryChanged", (msg) =>
-            {
-                var info = msg.Content as DirectoryInfo;
-                if (info.FullName == CurrentDirectoryInfo.FullName) return;
-                Push(info);
-            });
+            Messenger.AddMessageHandler(
+                Properties.Resources.MsgKey_CurrentDirectoryChanged, (msg) =>
+                {
+                    var info = msg.Content as DirectoryInfo;
+                    if (info.FullName == CurrentDirectoryInfo.FullName) return;
+                    Push(info);
+                });
         }
 
 
@@ -99,10 +100,8 @@ namespace mayapeeker.Models
         private void SendCurrentChangedMessage()
         {
             RaisePropertyChanged("CurrentDirectoryInfo");
-            //RaisePropertyChanged("ExistsBackward");
-            //RaisePropertyChanged("ExistsForward");
             Messenger.DispatchMessage(
-                new Interactivity.InteractionMessage("CurrentDirectoryChanged", CurrentDirectoryInfo));
+                Properties.Resources.MsgKey_CurrentDirectoryChanged, CurrentDirectoryInfo);
         }
 
 

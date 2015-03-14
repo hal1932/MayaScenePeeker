@@ -38,7 +38,7 @@ namespace mayapeeker.Models
 
                 RaisePropertyChanged("SelectedFilter");
                 Messenger.DispatchMessage(
-                    new Interactivity.InteractionMessage("FileFilterChanged", SelectedFilter));
+                    Properties.Resources.MsgKey_FileFilterChanged, SelectedFilter);
             }
         }
         #endregion

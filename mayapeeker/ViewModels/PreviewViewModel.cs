@@ -28,14 +28,16 @@ namespace mayapeeker.ViewModels
 
         public PreviewViewModel()
         {
-            Messenger.AddMessageHandler("SelectedItemChanged", (msg) =>
-            {
-                UpdateItemList(msg.Content as FileSystemInfo);
-            });
-            Messenger.AddMessageHandler("CurrentDirectoryChanged", (msg) =>
-            {
-                UpdateItemList(null);
-            });
+            Messenger.AddMessageHandler(
+                Properties.Resources.MsgKey_SelectedItemChanged, (msg) =>
+                {
+                    UpdateItemList(msg.Content as FileSystemInfo);
+                });
+            Messenger.AddMessageHandler(
+                Properties.Resources.MsgKey_CurrentDirectoryChanged, (msg) =>
+                {
+                    UpdateItemList(null);
+                });
         }
 
 

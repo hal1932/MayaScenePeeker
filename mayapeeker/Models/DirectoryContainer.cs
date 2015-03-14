@@ -52,15 +52,17 @@ namespace mayapeeker.Models
 
         public DirectoryContainer()
         {
-            Messenger.AddMessageHandler("CurrentDirectoryChanged", (msg) =>
-            {
-                Reload(msg.Content as DirectoryInfo);
-            });
-            Messenger.AddMessageHandler("FileFilterChanged", (msg) =>
-            {
-                _currentFilterArray = msg.Content as string[];
-                Reload();
-            });
+            Messenger.AddMessageHandler(
+                Properties.Resources.MsgKey_CurrentDirectoryChanged, (msg) =>
+                {
+                    Reload(msg.Content as DirectoryInfo);
+                });
+            Messenger.AddMessageHandler(
+                Properties.Resources.MsgKey_FileFilterChanged, (msg) =>
+                {
+                    _currentFilterArray = msg.Content as string[];
+                    Reload();
+                });
         }
 
 
@@ -138,7 +140,7 @@ namespace mayapeeker.Models
 
             _currentDirectory = info;
             Messenger.DispatchMessage(
-                new Interactivity.InteractionMessage("CurrentDirectoryChanged", info));
+                Properties.Resources.MsgKey_CurrentDirectoryChanged, info);
         }
 
 

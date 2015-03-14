@@ -82,6 +82,11 @@ namespace mayapeeker.Models.Interactivity
         }
 
 
+        public void DispatchMessage(string key, object content)
+        {
+            DispatchMessage(new InteractionMessage(key, content));
+        }
+
         public void DispatchMessage(InteractionMessage message)
         {
             if (_listenOnly) throw new InvalidOperationException("not allowed to dispatch message: listen only");

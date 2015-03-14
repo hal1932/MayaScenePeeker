@@ -23,8 +23,8 @@ namespace mayapeeker.ViewModels
                     FileSystemInfo info;
                     if(DirectoryContainer.TryGetValue(value, out info))
                     {
-                        Messenger.DispatchMessage(new InteractionMessage(
-                            "SelectedItemChanged", info));
+                        Messenger.DispatchMessage(
+                            Properties.Resources.MsgKey_SelectedItemChanged, info);
                     }
                 }
             }
