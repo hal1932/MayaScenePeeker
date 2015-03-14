@@ -74,7 +74,7 @@
     <Compile Include="Models\FilepathHistory.cs" />
     <Compile Include="Models\HashDb.cs" />
     <Compile Include="Models\Interactivity\InteractionMessage.cs" />
-    <Compile Include="Models\Interactivity\InteractionMessengar.cs" />
+    <Compile Include="Models\Interactivity\InteractionMessenger.cs" />
     <Compile Include="Models\MethodBinder.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="ViewModels\BookmarkViewModel.cs" />

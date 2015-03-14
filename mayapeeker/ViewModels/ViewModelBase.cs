@@ -47,7 +47,7 @@ namespace mayapeeker.ViewModels
 
 
         // デフォルトでは受信のみ
-        protected InteractionMessengar Messenger = new InteractionMessengar();
+        protected InteractionMessenger Messenger = new InteractionMessenger();
 
     }
 }

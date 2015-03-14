@@ -15,11 +15,10 @@ namespace mayapeeker.ViewModels
         {
             Container = new BookmarkContainer();
 
-            Messenger.AddMessageFilter("CurrentDirectoryChanged");
-            Messenger.MessageReceived += (sender, e) =>
+            Messenger.AddMessageHandler("CurrentDirectoryChanged", (msg) =>
             {
-                _currentDirectory = e.Content as DirectoryInfo;
-            };
+                _currentDirectory = msg.Content as DirectoryInfo;
+            });
         }
 
 

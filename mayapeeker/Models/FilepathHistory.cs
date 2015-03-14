@@ -24,13 +24,12 @@ namespace mayapeeker.Models
 
         public FilepathHistory()
         {
-            Messenger.AddMessageFilter("CurrentDirectoryChanged");
-            Messenger.MessageReceived += (sender, e) =>
+            Messenger.AddMessageHandler("CurrentDirectoryChanged", (msg) =>
             {
-                var info = e.Content as DirectoryInfo;
+                var info = msg.Content as DirectoryInfo;
                 if (info.FullName == CurrentDirectoryInfo.FullName) return;
                 Push(info);
-            };
+            });
         }
 
 

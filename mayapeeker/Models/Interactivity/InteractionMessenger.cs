@@ -4,34 +4,19 @@ using System.Threading.Tasks;
 
 namespace mayapeeker.Models.Interactivity
 {
-    public class InteractionMessageReceivedEventArgs : EventArgs
-    {
-        public InteractionMessage Message { get; private set; }
-
-        public InteractionMessageReceivedEventArgs(InteractionMessage message)
-        {
-            Message = message;
-        }
-    }
-
-
-
     /// <summary>
     /// メッセージの送受信を行う
     /// </summary>
-    public class InteractionMessengar : IDisposable
+    public class InteractionMessenger : IDisposable
     {
-        public event EventHandler<InteractionMessage> MessageReceived;
-
-
-        public InteractionMessengar()
+        public InteractionMessenger()
         {
             _listenOnly = true;
             _messengerList.Add(this);
         }
 
 
-        public InteractionMessengar(ModelBase sender)
+        public InteractionMessenger(ModelBase sender)
         {
             _listenOnly = false;
             _messengerList.Add(this);
@@ -40,7 +25,7 @@ namespace mayapeeker.Models.Interactivity
 
 
         #region IDisposable
-        ~InteractionMessengar()
+        ~InteractionMessenger()
         {
             Dispose(false);
         }
@@ -81,9 +66,19 @@ namespace mayapeeker.Models.Interactivity
         }
 
 
-        public void AddMessageFilter(string messageKey)
+        public void AddMessageHandler(string messageKey, Action<InteractionMessage> handler)
         {
-            _keyFilter.Add(messageKey);
+            var info = new HandlerInfo(this, handler);
+
+            List<HandlerInfo> handlerInfoList;
+            if (_handlerDic.TryGetValue(messageKey, out handlerInfoList))
+            {
+                handlerInfoList.Add(info);
+            }
+            else
+            {
+                _handlerDic[messageKey] = new List<HandlerInfo>() { info };
+            }
         }
 
 
@@ -97,29 +92,35 @@ namespace mayapeeker.Models.Interactivity
 
         private void DispatchMessageImpl(InteractionMessage message)
         {
-            foreach (var messenger in _messengerList)
+            List<HandlerInfo> handlerInfoList;
+            if (_handlerDic.TryGetValue(message.Key, out handlerInfoList))
             {
-                if (messenger == this) continue;
-                if (messenger.MessageReceived == null) continue;
-
-                if (messenger._keyFilter.Count > 0)
+                foreach (var info in handlerInfoList)
                 {
-                    if (!messenger._keyFilter.Contains(message.Key))
-                    {
-                        continue;
-                    }
+                    if (info.Instance == this) continue;
+                    info.Handler(message);
                 }
-                messenger.MessageReceived(_sender, message);
             }
         }
 
 
 
-        private static List<InteractionMessengar> _messengerList = new List<InteractionMessengar>();
+        private static List<InteractionMessenger> _messengerList = new List<InteractionMessenger>();
 
         private bool _listenOnly;
         private object _sender;
-        private List<string> _keyFilter = new List<string>();
+
+        private class HandlerInfo
+        {
+            public InteractionMessenger Instance { get; private set; }
+            public Action<InteractionMessage> Handler { get; private set; }
+            public HandlerInfo(InteractionMessenger instance, Action<InteractionMessage> handler)
+            {
+                Instance = instance;
+                Handler = handler;
+            }
+        }
+        private Dictionary<string, List<HandlerInfo>> _handlerDic = new Dictionary<string, List<HandlerInfo>>();
 
     }
 }

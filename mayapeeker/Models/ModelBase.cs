@@ -5,10 +5,10 @@ namespace mayapeeker.Models
     {
         public ModelBase()
         {
-            Messenger = new Interactivity.InteractionMessengar(this);
+            Messenger = new Interactivity.InteractionMessenger(this);
         }
 
 
-        protected Interactivity.InteractionMessengar Messenger;
+        protected Interactivity.InteractionMessenger Messenger;
     }
 }
