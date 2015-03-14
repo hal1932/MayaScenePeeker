@@ -7,22 +7,5 @@ using System.Threading.Tasks;
 
 namespace mayapeeker.ViewModels.FileListImpl
 {
-    class FileListImplBase : ViewModelBase
-    {
-        #region DirectoryContainer変更通知プロパティ
-        private DirectoryContainer _DirectoryContainer;
-
-        public DirectoryContainer DirectoryContainer
-        {
-            get { return _DirectoryContainer; }
-            set
-            { 
-                if (_DirectoryContainer == value) return;
-                _DirectoryContainer = value;
-                RaisePropertyChanged();
-            }
-        }
-        #endregion
-
-    }
+    class FileListImplBase : ViewModelBase { }
 }

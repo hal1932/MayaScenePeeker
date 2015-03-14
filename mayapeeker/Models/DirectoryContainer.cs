@@ -53,7 +53,7 @@ namespace mayapeeker.Models
             Messenger.AddMessageHandler(
                 Properties.Resources.MsgKey_CurrentDirectoryChanged, (msg) =>
                 {
-                    Reload(msg.Content as DirectoryInfo);
+                    Reload(msg.Content as DirectoryInfo, false);
                 });
             Messenger.AddMessageHandler(
                 Properties.Resources.MsgKey_FileFilterChanged, (msg) =>
@@ -95,20 +95,20 @@ namespace mayapeeker.Models
         }
 
 
-        public void Reload(DirectoryInfo info = null)
+        public void Reload(DirectoryInfo info = null, bool dispatchMessage = true)
         {
             if (Application.Current.Dispatcher.CheckAccess())
             {
-                ReloadImpl(info);
+                ReloadImpl(info, dispatchMessage);
             }
             else
             {
-                Application.Current.Dispatcher.Invoke(() => ReloadImpl(info));
+                Application.Current.Dispatcher.Invoke(() => ReloadImpl(info, dispatchMessage));
             }
         }
 
 
-        private void ReloadImpl(DirectoryInfo info)
+        private void ReloadImpl(DirectoryInfo info, bool dispatchMessage)
         {
             if (info == null)
             {
@@ -123,22 +123,26 @@ namespace mayapeeker.Models
                 }
             }
 
-            if (_currentFilterArray == null) return;
-
-
             var items = info.GetDirectories().Select(dir => new Item(dir));
-            foreach (var filter in _currentFilterArray)
+            if (_currentFilterArray != null)
             {
-                items = items.Concat(
-                    info.GetFiles(filter).Select(file => new Item(file)));
+                foreach (var filter in _currentFilterArray)
+                {
+                    items = items.Concat(
+                        info.GetFiles(filter).Select(file => new Item(file)));
+                }
             }
             _baseList = items.ToList();
 
             ApplyFilter();
 
             _currentDirectory = info;
-            Messenger.DispatchMessage(
-                Properties.Resources.MsgKey_CurrentDirectoryChanged, info);
+
+            if (dispatchMessage)
+            {
+                Messenger.DispatchMessage(
+                    Properties.Resources.MsgKey_CurrentDirectoryChanged, info);
+            }
         }
 
 

@@ -8,10 +8,28 @@
              xmlns:views="clr-namespace:mayapeeker.Views"
              mc:Ignorable="d">
 
-    <ListBox ItemsSource="{Binding DirectoryContainer.ItemList}">
+    <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+             VerticalAlignment="Stretch"
+             ItemsSource="{Binding DataContext.DirectoryContainer.ItemList, ElementName=_container}"
+             SelectedIndex="{Binding DataContext.SelectedItemIndex, ElementName=_container, Mode=OneWayToSource}">
+        
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <TextBlock Text="{Binding FileSystemInfo.Name}"/>
+                <ContentControl>
+                    <StackPanel Orientation="Horizontal">
+                        <views:ImageIcon SourceInfo="{Binding FileSystemInfo}"
+                                     Width="16" Height="16"/>
+                        <TextBlock Text="{Binding FileSystemInfo.Name}"/>
+                    </StackPanel>
+                    
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <behaviors:CallMethodAction
+                                       SourceObject="{Binding DataContext, ElementName=_container}"
+                                       MethodName="SelectItem"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ContentControl>
             </DataTemplate>
         </ListBox.ItemTemplate>
     </ListBox>

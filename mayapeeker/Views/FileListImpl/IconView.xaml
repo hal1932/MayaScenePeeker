@@ -9,11 +9,10 @@
              mc:Ignorable="d">
 
 
-    <ListBox Name="_listBox"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                 VerticalAlignment="Stretch"
-                 ItemsSource="{Binding DirectoryContainer.ItemList}"
-                 SelectedIndex="{Binding SelectedItemIndex, Mode=OneWayToSource}">
+    <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+             VerticalAlignment="Stretch"
+             ItemsSource="{Binding DataContext.DirectoryContainer.ItemList, ElementName=_container}"
+             SelectedIndex="{Binding DataContext.SelectedItemIndex, ElementName=_container, Mode=OneWayToSource}">
 
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
@@ -24,7 +23,7 @@
         <!--
                 ListBoxItem のデフォルトスタイルで親パネルの Horizontal/VerticalContentAlignment を
                 参照しているが、WrapPanel はそれを持っていないので、デフォルトスタイルを上書きしておく
-            -->
+        -->
         <ListBox.ItemContainerStyle>
             <Style TargetType="{x:Type ListBoxItem}">
                 <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -41,6 +40,7 @@
                                     <Setter TargetName="border" Property="BorderBrush" Value="Red"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
+                            
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -49,21 +49,22 @@
 
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <StackPanel Orientation="Vertical" Width="100" Margin="3">
-                    <views:ImageIcon SourceInfo="{Binding FileSystemInfo}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseDoubleClick">
-                                <behaviors:CallMethodAction
+                <ContentControl>
+                    <StackPanel Orientation="Vertical" Width="75" Margin="3">
+                        <views:ImageIcon SourceInfo="{Binding FileSystemInfo}"/>
+                        <TextBlock Text="{Binding FileSystemInfo.Name}"
+                               TextWrapping="Wrap"
+                               HorizontalAlignment="Center"/>
+                    </StackPanel>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <behaviors:CallMethodAction
                                         SourceObject="{Binding DataContext, ElementName=_container}"
                                         MethodName="SelectItem"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </views:ImageIcon>
-
-                    <TextBlock Text="{Binding FileSystemInfo.Name}"
-                                   TextWrapping="Wrap"
-                                   HorizontalAlignment="Center"/>
-                </StackPanel>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ContentControl>
             </DataTemplate>
         </ListBox.ItemTemplate>
 

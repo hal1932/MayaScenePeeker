@@ -126,7 +126,8 @@ namespace mayapeeker.Models.Interactivity
         {
             if (_listenOnly) throw new InvalidOperationException("not allowed to dispatch message: listen only");
 
-            Task.Factory.StartNew(() => DispatchMessageImpl(message));
+            //Task.Factory.StartNew(() => DispatchMessageImpl(message));
+            DispatchMessageImpl(message);
         }
 
 

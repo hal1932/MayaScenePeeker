@@ -68,6 +68,7 @@ namespace mayapeeker.ViewModels
         public override void Initialize()
         {
             base.Initialize();
+            SwitchToNameView();
         }
 
 
@@ -89,10 +90,7 @@ namespace mayapeeker.ViewModels
         {
             if (!(ImplViewModel is FileListImpl.IconView))
             {
-                ImplViewModel = new FileListImpl.IconView()
-                {
-                    DirectoryContainer = DirectoryContainer,
-                };
+                ImplViewModel = new FileListImpl.IconView();
             }
         }
 
@@ -101,10 +99,7 @@ namespace mayapeeker.ViewModels
         {
             if (!(ImplViewModel is FileListImpl.NameView))
             {
-                ImplViewModel = new FileListImpl.NameView()
-                {
-                    DirectoryContainer = DirectoryContainer,
-                };
+                ImplViewModel = new FileListImpl.NameView();
             }
         }
 

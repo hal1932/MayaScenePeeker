@@ -24,13 +24,6 @@ namespace mayapeeker.Views.FileListImpl
         public IconView()
         {
             InitializeComponent();
-
-            _listBox.PreviewKeyUp += (sender, e) =>
-            {
-                if (e.Key == Key.Enter)
-                {
-                }
-            };
         }
     }
 }

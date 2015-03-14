@@ -15,6 +15,7 @@ namespace mayapeeker.Views
 {
     class ImageIcon : Image
     {
+        #region MouseDoubleClick
         public static readonly RoutedEvent MouseDoubleClickEvent =
             EventManager.RegisterRoutedEvent(
                 "MouseDoubleClick",
@@ -27,6 +28,7 @@ namespace mayapeeker.Views
             add { AddHandler(MouseDoubleClickEvent, value); }
             remove { RemoveHandler(MouseDoubleClickEvent, value); }
         }
+        #endregion
 
 
         #region SourceInfo
@@ -54,12 +56,10 @@ namespace mayapeeker.Views
             if (info.Attributes == FileAttributes.Directory)
             {
                 image = _imageContainer.CreateImage("directory", Properties.Resources.folder);
-                imageIcon.Stretch = System.Windows.Media.Stretch.None;
             }
             else
             {
                 image = _imageContainer.CreateImage(info.FullName, info);
-                imageIcon.Stretch = System.Windows.Media.Stretch.Uniform;
             }
             imageIcon.Source = image;
         }
