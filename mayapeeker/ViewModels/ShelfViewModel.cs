@@ -62,17 +62,13 @@ namespace mayapeeker.ViewModels
             _history.Load();
             CurrentDirectoryPath = _history.CurrentDirectoryInfo.FullName;
             
-            _history.PropertyChanged += (sender, e) =>
-            {
-                switch(e.PropertyName)
-                { 
-                    case "CurrentDirectoryInfo":
-                        CurrentDirectoryPath = _history.CurrentDirectoryInfo.FullName;
-                        ExistsBackward = _history.ExistsBackward;
-                        ExistsForward = _history.ExistsForward;
-                        break;
-                }
-            };
+            _history.AddPropertyChangedHandler(
+                "CurrentDirectoryInfo", (e) =>
+                {
+                    CurrentDirectoryPath = _history.CurrentDirectoryInfo.FullName;
+                    ExistsBackward = _history.ExistsBackward;
+                    ExistsForward = _history.ExistsForward;
+                });
 
             base.Initialize();
         }
