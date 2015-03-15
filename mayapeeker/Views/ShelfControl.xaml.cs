@@ -26,7 +26,7 @@ namespace mayapeeker.Views
             };
         }
 
-        private void TextBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        private void PathTextBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key != System.Windows.Input.Key.Return) return;
             (_container.DataContext as ViewModels.ShelfViewModel).PushCurrentToHistory();

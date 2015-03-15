@@ -18,7 +18,7 @@
                 <ContentControl>
                     <StackPanel Orientation="Horizontal">
                         <views:ImageIcon SourceInfo="{Binding FileSystemInfo}"
-                                     Width="16" Height="16"/>
+                                         Width="16" Height="16"/>
                         <TextBlock Text="{Binding FileSystemInfo.Name}"/>
                     </StackPanel>
                     
@@ -26,7 +26,7 @@
                         <i:EventTrigger EventName="MouseDoubleClick">
                             <behaviors:CallMethodAction
                                        SourceObject="{Binding DataContext, ElementName=_container}"
-                                       MethodName="SelectItem"/>
+                                       MethodName="OpenItem"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ContentControl>

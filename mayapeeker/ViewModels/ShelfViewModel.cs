@@ -133,24 +133,21 @@ namespace mayapeeker.ViewModels
 
         public void OpenHistoryBox()
         {
-            bool doOpen = !IsOpenedHistoryBox;
-            if (doOpen)
+            var historyArray = _history.ItemStack
+                .Where(item => item.FullName != CurrentDirectoryPath)
+                .Distinct(item => item.FullName)
+                .ToArray();
+
+            var dataContext = new PathHistoryBoxViewModel(historyArray);
+            dataContext.SelectedItemChanged += (item) =>
             {
-                var historyArray = _history.ItemStack
-                    .Where(item => item.FullName != CurrentDirectoryPath)
-                    .Distinct(item => item.FullName)
-                    .ToArray();
+                _history.Push(item);
+                IsOpenedHistoryBox = false;
+                HistoryBoxDataContext = null;
+            };
 
-                var dataContext = new PathHistoryBoxViewModel(historyArray);
-                dataContext.SelectedItemChanged += (item) =>
-                {
-                    _history.Push(item);
-                    IsOpenedHistoryBox = false;
-                };
-
-                HistoryBoxDataContext = dataContext;
-            }
-            IsOpenedHistoryBox = doOpen;
+            HistoryBoxDataContext = dataContext;
+            IsOpenedHistoryBox = true;
         }
 
 

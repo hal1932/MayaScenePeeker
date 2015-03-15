@@ -72,7 +72,7 @@ namespace mayapeeker.ViewModels
         }
 
 
-        public void SelectItem()
+        public void OpenItem()
         {
             var item = DirectoryContainer.ItemList[SelectedItemIndex];
             if (item.DirectoryInfo != null)

@@ -23,6 +23,21 @@ namespace mayapeeker.ViewModels
         }
         #endregion
 
+        #region SelectedIndex変更通知プロパティ
+        private int _SelectedIndex;
+
+        public int SelectedIndex
+        {
+            get { return _SelectedIndex; }
+            set
+            { 
+                if (_SelectedIndex == value) return;
+                _SelectedIndex = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
 
         public PreviewViewModel()
         {
@@ -42,6 +57,16 @@ namespace mayapeeker.ViewModels
         public override void Initialize()
         {
             base.Initialize();
+            Messenger.SetAsDispatcher(this);
+        }
+
+
+        public void OpenItem()
+        {
+            if (SelectedIndex >= 0)
+            {
+                Debug.WriteLine("  +++ open +++ " + ItemList[SelectedIndex]);
+            }
         }
 
 

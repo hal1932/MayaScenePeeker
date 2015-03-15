@@ -3,16 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behaviors="clr-namespace:mayapeeker.Behaviors"
              mc:Ignorable="d">
-    <Grid>
-        <DockPanel>
-            <ListBox ItemsSource="{Binding ItemList}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <ContentControl Content="{Binding}"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ListBox>
-        </DockPanel>
-    </Grid>
+
+    <ListBox Name="_container"
+             ItemsSource="{Binding ItemList}"
+             SelectedIndex="{Binding SelectedIndex}">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <ContentControl>
+                    <TextBlock Text="{Binding}"/>
+                    
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <behaviors:CallMethodAction SourceObject="{Binding DataContext, ElementName=_container}"
+                                                        MethodName="OpenItem"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ContentControl>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ListBox>
+
 </UserControl>

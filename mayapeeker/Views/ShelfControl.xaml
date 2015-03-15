@@ -22,6 +22,7 @@
         <Label DockPanel.Dock="Left" Content="ファイルの場所:"/>
 
         <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+
             <Button Width="24" Margin="2" IsEnabled="{Binding ExistsBackward}">
                 <Image Source="{StaticResource Image_Back}"/>
                 <i:Interaction.Triggers>
@@ -51,6 +52,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
+
         </StackPanel>
 
         <DockPanel>
@@ -76,8 +78,8 @@
                 <TextBox Name="pathInputBox"
                          Margin="2,2,0,2"
                          Text="{Binding CurrentDirectoryPath, UpdateSourceTrigger=PropertyChanged}"
-                         KeyUp="TextBox_KeyUp"/>
-                <Popup IsOpen="{Binding IsOpenedHistoryBox, Mode=OneWay}"
+                         KeyUp="PathTextBox_KeyUp"/>
+                <Popup IsOpen="{Binding IsOpenedHistoryBox}"
                        Width="{Binding ActualWidth, ElementName=pathInputBox}"
                        MaxHeight="200"
                        StaysOpen="False"
