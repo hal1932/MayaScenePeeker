@@ -40,7 +40,7 @@
             
             <ListBox.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="現在の場所を追加">
+                    <MenuItem Header="現在の場所を追加" Height="24">
                         <MenuItem.Icon>
                             <Image Source="{StaticResource Image_Plus1}"/>
                         </MenuItem.Icon>
@@ -52,7 +52,7 @@
                         </i:Interaction.Triggers>
                     </MenuItem>
 
-                    <MenuItem Header="追加">
+                    <MenuItem Header="追加" Height="24">
                         <MenuItem.Icon>
                             <Image Source="{StaticResource Image_Plus}"/>
                         </MenuItem.Icon>
@@ -64,7 +64,7 @@
                         </i:Interaction.Triggers>
                     </MenuItem>
 
-                    <MenuItem Header="削除">
+                    <MenuItem Header="削除" Height="24">
                         <MenuItem.Icon>
                             <Image Source="{StaticResource Image_Minus}"/>
                         </MenuItem.Icon>
