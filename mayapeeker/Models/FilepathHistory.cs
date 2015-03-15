@@ -6,9 +6,11 @@ namespace mayapeeker.Models
 {
     public class FilepathHistory : ModelBase
     {
+        public List<DirectoryInfo> ItemStack { get; private set; }
+
         public DirectoryInfo CurrentDirectoryInfo
         {
-            get { return _itemHistory[_currentItemIndex]; }
+            get { return ItemStack[_currentItemIndex]; }
         }
 
         public bool ExistsBackward
@@ -18,7 +20,7 @@ namespace mayapeeker.Models
 
         public bool ExistsForward
         {
-            get { return _currentItemIndex < _itemHistory.Count - 1; }
+            get { return _currentItemIndex < ItemStack.Count - 1; }
         }
 
 
@@ -31,6 +33,7 @@ namespace mayapeeker.Models
                     if (info.FullName == CurrentDirectoryInfo.FullName) return;
                     Push(info);
                 });
+            ItemStack = new List<DirectoryInfo>();
         }
 
 
@@ -41,7 +44,7 @@ namespace mayapeeker.Models
             {
                 lastItem = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             }
-            _itemHistory.Add(new DirectoryInfo(lastItem));
+            ItemStack.Add(new DirectoryInfo(lastItem));
 
             SendCurrentChangedMessage();
         }
@@ -60,14 +63,14 @@ namespace mayapeeker.Models
             // 現在地が「最新のアイテム」を指していない場合、
             // 履歴の整合性を保つために、現在地から先の履歴を削除して、
             // 新しく追加されたものが「最新」になるようにする。
-            if (_currentItemIndex < _itemHistory.Count - 1)
+            if (_currentItemIndex < ItemStack.Count - 1)
             {
-                _itemHistory.RemoveRange(
-                    _currentItemIndex + 1, _itemHistory.Count - _currentItemIndex - 1);
+                ItemStack.RemoveRange(
+                    _currentItemIndex + 1, ItemStack.Count - _currentItemIndex - 1);
             }
 
-            _itemHistory.Add(info);
-            _currentItemIndex = _itemHistory.Count - 1;
+            ItemStack.Add(info);
+            _currentItemIndex = ItemStack.Count - 1;
 
             SendCurrentChangedMessage();
         }
@@ -84,7 +87,7 @@ namespace mayapeeker.Models
 
         public void SetForward()
         {
-            if (_currentItemIndex >= _itemHistory.Count - 1) return;
+            if (_currentItemIndex >= ItemStack.Count - 1) return;
             ++_currentItemIndex;
 
             SendCurrentChangedMessage();
@@ -93,7 +96,7 @@ namespace mayapeeker.Models
 
         private int FindItemIndex(DirectoryInfo info)
         {
-            return _itemHistory.FindIndex(item => item.FullName == info.FullName);
+            return ItemStack.FindIndex(item => item.FullName == info.FullName);
         }
 
 
@@ -105,7 +108,6 @@ namespace mayapeeker.Models
         }
 
 
-        private List<DirectoryInfo> _itemHistory = new List<DirectoryInfo>();
         private int _currentItemIndex;
 
     }

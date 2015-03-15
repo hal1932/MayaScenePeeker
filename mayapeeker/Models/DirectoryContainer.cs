@@ -115,13 +115,17 @@ namespace mayapeeker.Models
                 if (_currentDirectory == null) return;
                 else info = _currentDirectory;
             }
-            else
-            {
-                if (_currentDirectory != null)
-                {
-                    if (info.FullName == _currentDirectory.FullName) return;
-                }
-            }
+            //else
+            //{
+            //    if (_currentDirectory != null)
+            //    {
+            //        if (info.FullName == _currentDirectory.FullName
+            //            && info.LastWriteTime == _currentDirectory.LastWriteTime)
+            //        {
+            //            return;
+            //        }
+            //    }
+            //}
 
             var items = info.GetDirectories().Select(dir => new Item(dir));
             if (_currentFilterArray != null)

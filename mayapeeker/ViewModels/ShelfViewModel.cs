@@ -1,5 +1,8 @@
 ﻿
 using System.IO;
+using System.Linq;
+using mayapeeker.Models;
+
 namespace mayapeeker.ViewModels
 {
     class ShelfViewModel : ViewModelBase
@@ -49,11 +52,41 @@ namespace mayapeeker.ViewModels
         }
         #endregion
 
+        #region IsOpenedHistoryBox変更通知プロパティ
+        private bool _IsOpenedHistoryBox;
+
+        public bool IsOpenedHistoryBox
+        {
+            get { return _IsOpenedHistoryBox; }
+            set
+            { 
+                if (_IsOpenedHistoryBox == value) return;
+                _IsOpenedHistoryBox = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+        #region HistoryBoxDataContext変更通知プロパティ
+        private PathHistoryBoxViewModel _HistoryBoxDataContext;
+
+        public PathHistoryBoxViewModel HistoryBoxDataContext
+        {
+            get { return _HistoryBoxDataContext; }
+            set
+            { 
+                if (_HistoryBoxDataContext == value) return;
+                _HistoryBoxDataContext = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
 
 
         public ShelfViewModel()
         {
             _history = new Models.FilepathHistory();
+            Messenger.SetAsDispatcher(this);
         }
 
 
@@ -88,6 +121,36 @@ namespace mayapeeker.ViewModels
         public void ChangeToForwardDirectory()
         {
             _history.SetForward();
+        }
+
+
+        public void Refresh()
+        {
+            Messenger.DispatchMessage(
+                Properties.Resources.MsgKey_CurrentDirectoryChanged, _history.CurrentDirectoryInfo);
+        }
+
+
+        public void OpenHistoryBox()
+        {
+            bool doOpen = !IsOpenedHistoryBox;
+            if (doOpen)
+            {
+                var historyArray = _history.ItemStack
+                    .Where(item => item.FullName != CurrentDirectoryPath)
+                    .Distinct(item => item.FullName)
+                    .ToArray();
+
+                var dataContext = new PathHistoryBoxViewModel(historyArray);
+                dataContext.SelectedItemChanged += (item) =>
+                {
+                    _history.Push(item);
+                    IsOpenedHistoryBox = false;
+                };
+
+                HistoryBoxDataContext = dataContext;
+            }
+            IsOpenedHistoryBox = doOpen;
         }
 
 

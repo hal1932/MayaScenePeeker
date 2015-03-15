@@ -6,6 +6,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:behaviors="clr-namespace:mayapeeker.Behaviors"
              xmlns:converters="clr-namespace:mayapeeker.Views.Converters"
+             xmlns:views="clr-namespace:mayapeeker.Views"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -13,6 +14,7 @@
         <BitmapImage x:Key="Image_Back" UriSource="Images/back.png"/>
         <BitmapImage x:Key="Image_Forward" UriSource="Images/forward.png"/>
         <BitmapImage x:Key="Image_Up" UriSource="Images/up.png"/>
+        <BitmapImage x:Key="Image_Refresh" UriSource="Images/refresh.png"/>
         <converters:PathFullNameConverter x:Key="fullName"/>
     </UserControl.Resources>
     
@@ -53,11 +55,36 @@
 
         <DockPanel>
             <Button DockPanel.Dock="Right" Width="24" Margin="0,2,2,2">
-                <Image Source="{StaticResource Image_Expand}"/>
+                <Image Source="{StaticResource Image_Refresh}"/>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <behaviors:CallMethodAction SourceObject="{Binding}"
+                                                    MethodName="Refresh"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </Button>
-            <TextBox Margin="2,2,0,2"
-                     Text="{Binding CurrentDirectoryPath, UpdateSourceTrigger=PropertyChanged}"
-                     KeyUp="TextBox_KeyUp"/>
+            <Button DockPanel.Dock="Right" Width="24" Margin="0,2,2,2">
+                <Image Source="{StaticResource Image_Expand}"/>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <behaviors:CallMethodAction SourceObject="{Binding}"
+                                                    MethodName="OpenHistoryBox"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <StackPanel Orientation="Vertical">
+                <TextBox Name="pathInputBox"
+                         Margin="2,2,0,2"
+                         Text="{Binding CurrentDirectoryPath, UpdateSourceTrigger=PropertyChanged}"
+                         KeyUp="TextBox_KeyUp"/>
+                <Popup IsOpen="{Binding IsOpenedHistoryBox, Mode=OneWay}"
+                       Width="{Binding ActualWidth, ElementName=pathInputBox}"
+                       MaxHeight="200"
+                       StaysOpen="False"
+                       PopupAnimation="Slide" AllowsTransparency="True">
+                    <views:PathHistoryBox DataContext="{Binding HistoryBoxDataContext}"/>
+                </Popup>
+            </StackPanel>
         </DockPanel>
     </DockPanel>
 </UserControl>
