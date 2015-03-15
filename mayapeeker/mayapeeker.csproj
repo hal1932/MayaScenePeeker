@@ -101,6 +101,7 @@
     <Compile Include="Views\FileListImpl\IconView.xaml.cs">
       <DependentUpon>IconView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FollowablePopup.cs" />
     <Compile Include="Views\ImageIcon.cs" />
     <Compile Include="Views\PathHistoryBox.xaml.cs">
       <DependentUpon>PathHistoryBox.xaml</DependentUpon>
