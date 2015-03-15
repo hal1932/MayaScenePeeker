@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:behaviors="clr-namespace:mayapeeker.Behaviors"
+             xmlns:views="clr-namespace:mayapeeker.Views"
              mc:Ignorable="d">
 
     <ListBox Name="_container"
@@ -13,7 +14,11 @@
         <ItemsControl.ItemTemplate>
             <DataTemplate>
                 <ContentControl>
-                    <TextBlock Text="{Binding}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <views:ImageIcon SourceInfo="{Binding}"
+                                         Width="16" Height="16"/>
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
                     
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDoubleClick">

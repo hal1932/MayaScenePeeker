@@ -9,9 +9,9 @@ namespace mayapeeker.ViewModels
     class PreviewViewModel : ViewModelBase
     {
         #region ItemList変更通知プロパティ
-        private string[] _ItemList;
+        private FileSystemInfo[] _ItemList;
 
-        public string[] ItemList
+        public FileSystemInfo[] ItemList
         {
             get { return _ItemList; }
             set
@@ -75,12 +75,16 @@ namespace mayapeeker.ViewModels
             if (info is DirectoryInfo)
             {
                 var dirInfo = (DirectoryInfo)info;
-                var items = dirInfo.GetDirectories().Select(item => item.Name);
-                ItemList = items.Concat(dirInfo.GetFiles().Select(item => item.Name)).ToArray();
+
+                var items = new FileSystemInfo[] { };
+                ItemList = items
+                    .Concat(dirInfo.GetDirectories())
+                    .Concat(dirInfo.GetFiles())
+                    .ToArray();
             }
             else
             {
-                ItemList = new string[] { };
+                ItemList = new FileSystemInfo[] { };
             }
         }
 
