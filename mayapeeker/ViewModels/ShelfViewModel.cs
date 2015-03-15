@@ -127,7 +127,7 @@ namespace mayapeeker.ViewModels
         public void Refresh()
         {
             Messenger.DispatchMessage(
-                Properties.Resources.MsgKey_CurrentDirectoryChanged, _history.CurrentDirectoryInfo);
+                Properties.Resources.MsgKey_RequestChangeCurrentDirectory, _history.CurrentDirectoryInfo);
         }
 
 

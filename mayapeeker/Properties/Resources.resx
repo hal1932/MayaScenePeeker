@@ -142,4 +142,8 @@
     <value>SelectedItemChanged</value>
     <comment>選択中のファイルorディレクトリが変更された</comment>
   </data>
+  <data name="MsgKey_RequestChangeCurrentDIrectory" xml:space="preserve">
+    <value>RequestChangeCurrentDirectory</value>
+    <comment>カレントディレクトリ変更を要求する</comment>
+  </data>
 </root>

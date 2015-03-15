@@ -85,7 +85,7 @@ namespace mayapeeker.Models
             if (!item.DirectoryInfo.Exists) return;
 
             Messenger.DispatchMessage(
-                Properties.Resources.MsgKey_CurrentDirectoryChanged, item.DirectoryInfo);
+                Properties.Resources.MsgKey_RequestChangeCurrentDirectory, item.DirectoryInfo);
         }
 
 

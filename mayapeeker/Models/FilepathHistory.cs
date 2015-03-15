@@ -104,7 +104,7 @@ namespace mayapeeker.Models
         {
             RaisePropertyChanged("CurrentDirectoryInfo");
             Messenger.DispatchMessage(
-                Properties.Resources.MsgKey_CurrentDirectoryChanged, CurrentDirectoryInfo);
+                Properties.Resources.MsgKey_RequestChangeCurrentDirectory, CurrentDirectoryInfo);
         }
 
 

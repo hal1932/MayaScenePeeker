@@ -51,9 +51,9 @@ namespace mayapeeker.Models
         public DirectoryContainer()
         {
             Messenger.AddMessageHandler(
-                Properties.Resources.MsgKey_CurrentDirectoryChanged, (msg) =>
+                Properties.Resources.MsgKey_RequestChangeCurrentDirectory, (msg) =>
                 {
-                    Reload(msg.Content as DirectoryInfo, false);
+                    Reload(msg.Content as DirectoryInfo);
                 });
             Messenger.AddMessageHandler(
                 Properties.Resources.MsgKey_FileFilterChanged, (msg) =>
@@ -95,20 +95,20 @@ namespace mayapeeker.Models
         }
 
 
-        public void Reload(DirectoryInfo info = null, bool dispatchMessage = true)
+        public void Reload(DirectoryInfo info = null)
         {
             if (Application.Current.Dispatcher.CheckAccess())
             {
-                ReloadImpl(info, dispatchMessage);
+                ReloadImpl(info);
             }
             else
             {
-                Application.Current.Dispatcher.Invoke(() => ReloadImpl(info, dispatchMessage));
+                Application.Current.Dispatcher.Invoke(() => ReloadImpl(info));
             }
         }
 
 
-        private void ReloadImpl(DirectoryInfo info, bool dispatchMessage)
+        private void ReloadImpl(DirectoryInfo info)
         {
             if (info == null)
             {
@@ -142,11 +142,8 @@ namespace mayapeeker.Models
 
             _currentDirectory = info;
 
-            if (dispatchMessage)
-            {
-                Messenger.DispatchMessage(
-                    Properties.Resources.MsgKey_CurrentDirectoryChanged, info);
-            }
+            Messenger.DispatchMessage(
+                Properties.Resources.MsgKey_CurrentDirectoryChanged, info);
         }
 
 

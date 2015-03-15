@@ -3,6 +3,8 @@ using mayapeeker.Models.Interactivity;
 using System.Diagnostics;
 using System.Linq;
 using System.IO;
+using System;
+using System.Windows;
 
 namespace mayapeeker.ViewModels
 {
@@ -63,9 +65,17 @@ namespace mayapeeker.ViewModels
 
         public void OpenItem()
         {
-            if (SelectedIndex >= 0)
+            if (SelectedIndex < 0) return;
+
+            var selected = ItemList[SelectedIndex];
+            if (File.Exists(selected.FullName))
             {
-                Debug.WriteLine("  +++ open +++ " + ItemList[SelectedIndex]);
+                Debug.WriteLine("  +++ open +++ " + ItemList[SelectedIndex].FullName);
+            }
+            else
+            {
+                Messenger.DispatchMessage(
+                    Properties.Resources.MsgKey_RequestChangeCurrentDirectory, selected);
             }
         }
 
@@ -77,10 +87,17 @@ namespace mayapeeker.ViewModels
                 var dirInfo = (DirectoryInfo)info;
 
                 var items = new FileSystemInfo[] { };
-                ItemList = items
-                    .Concat(dirInfo.GetDirectories())
-                    .Concat(dirInfo.GetFiles())
-                    .ToArray();
+                try
+                {
+                    ItemList = items
+                        .Concat(dirInfo.GetDirectories())
+                        .Concat(dirInfo.GetFiles())
+                        .ToArray();
+                }
+                catch(UnauthorizedAccessException)
+                {
+                    MessageBox.Show("フォルダへのアクセス権限がありません");
+                }
             }
             else
             {

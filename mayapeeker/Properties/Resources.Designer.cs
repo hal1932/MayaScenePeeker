@@ -116,6 +116,15 @@ namespace mayapeeker.Properties {
         }
         
         /// <summary>
+        ///   RequestChangeCurrentDirectory に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MsgKey_RequestChangeCurrentDirectory {
+            get {
+                return ResourceManager.GetString("MsgKey_RequestChangeCurrentDIrectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   SelectedItemChanged に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MsgKey_SelectedItemChanged {

@@ -83,7 +83,17 @@ namespace mayapeeker.Models
                 return image;
             }
 
-            var icon = Icon.ExtractAssociatedIcon(info.FullName);
+            Icon icon;
+            try
+            {
+                icon = Icon.ExtractAssociatedIcon(info.FullName);
+            }
+            catch (FileNotFoundException)
+            {
+                // アイコンがない
+                return null;
+            }
+
             var item = CreateImageItem(icon.ToBitmap());
 
             _cache[key] = item;
